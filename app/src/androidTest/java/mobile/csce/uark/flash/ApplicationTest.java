@@ -12,10 +12,6 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
 
-    public void chriscommit()
-    {
-       //test
-    }
 
 
 }
