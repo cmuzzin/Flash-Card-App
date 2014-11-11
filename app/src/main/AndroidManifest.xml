@@ -20,6 +20,10 @@
             android:name=".CreateDeck"
             android:label="@string/title_activity_create_deck" >
         </activity>
+        <activity
+            android:name=".ViewDeck"
+            android:label="@string/title_activity_view_deck" >
+        </activity>
     </application>
 
 </manifest>
