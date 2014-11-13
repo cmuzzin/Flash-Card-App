@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by chrismuzzin on 11/11/14.
  */
-public class CreateDeckItem implements Serializable {
+public class Deck implements Serializable {
 
     public String deckname;
 
@@ -21,7 +21,8 @@ public void setDeckname(String n)
     deckname = n;
 }
 
-public String ToString()
+@Override
+public String toString()
 {
 
     return deckname;

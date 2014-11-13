@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,7 +29,7 @@ public class CreateDeck extends Activity {
     }
 
     public void savedeck(View view){
-        CreateDeckItem createdeckitem = new CreateDeckItem();
+        Deck createdeckitem = new Deck();
         createdeckitem.setDeckname(((TextView) findViewById(R.id.textView)).getText().toString());
         Intent intent = new Intent();
         intent.putExtra("nameid", (Serializable)createdeckitem);

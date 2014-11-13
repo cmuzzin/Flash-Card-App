@@ -16,14 +16,14 @@ import java.util.ArrayList;
 
 public class StartActivity extends Activity implements AdapterView.OnItemClickListener{
 
-    ArrayList<CreateDeckItem> createdeckItems;
+    ArrayList<Deck> createdeckItems;
     ArrayAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        createdeckItems = new ArrayList<CreateDeckItem>();
+        createdeckItems = new ArrayList<Deck>();
         final  ListView listview = (ListView) findViewById(R.id.listView);
         listview.setOnItemClickListener(this);
         adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,createdeckItems);
@@ -59,7 +59,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
 
     }
 
-    public Intent ViewDeck(CreateDeckItem deck)
+    public Intent ViewDeck(Deck deck)
     {
         Intent intent = new Intent(StartActivity.this,ViewDeck.class);
         intent.putExtra("nameid",(Serializable) deck);
@@ -74,12 +74,12 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         {
             if (request == 1)
             {
-                CreateDeckItem i = (CreateDeckItem) data.getSerializableExtra("nameid");
+                Deck i = (Deck) data.getSerializableExtra("nameid");
                 adapter.add(i);
             }
             if (request == 2)
             {
-                CreateDeckItem j = (CreateDeckItem) data.getSerializableExtra("delete");
+                Deck j = (Deck) data.getSerializableExtra("delete");
                 Bundle extras = data.getExtras();
                 int position = data.getIntExtra("spot", 0);
                 adapter.remove(adapter.getItem(position));
@@ -94,7 +94,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        CreateDeckItem pass = (CreateDeckItem) adapter.getItem(position);
+        Deck pass = (Deck) adapter.getItem(position);
         Intent intent = ViewDeck(pass);
 
         intent.putExtra("spot", position);

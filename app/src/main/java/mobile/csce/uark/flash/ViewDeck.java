@@ -18,7 +18,7 @@ public class ViewDeck extends Activity {
         setContentView(R.layout.activity_view_deck);
 
         // get serializable
-        CreateDeckItem vd = (CreateDeckItem) getIntent().getSerializableExtra("nameid");
+        Deck vd = (Deck) getIntent().getSerializableExtra("nameid");
         //bundle
 
         // get position
@@ -63,7 +63,7 @@ public class ViewDeck extends Activity {
     {
         Intent intent = new Intent();
         intent.putExtra("spot", position);
-        intent.putExtra("delete", (CreateDeckItem) getIntent().getSerializableExtra("nameid"));
+        intent.putExtra("delete", (Deck) getIntent().getSerializableExtra("nameid"));
         setResult(RESULT_OK, intent);
 
         finish();
