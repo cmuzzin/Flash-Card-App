@@ -52,9 +52,9 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         return super.onOptionsItemSelected(item);
     }
 
-    public void StartCreateDeckActivity()
+    public void StartCreateDeckActivity(View view)
     {
-        Intent intent = new Intent(StartActivity.this,CreateDeck.class);
+        Intent intent = new Intent(this,CreateDeck.class);
         startActivityForResult(intent, 1);
 
     }

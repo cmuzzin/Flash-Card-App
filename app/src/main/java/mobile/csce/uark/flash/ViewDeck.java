@@ -29,6 +29,9 @@ public class ViewDeck extends Activity {
         String deckname = vd.GetDeckname();
         TextView namedisplay = (TextView) findViewById(R.id.textView2);
         namedisplay.setText(deckname);
+        System.out.println("\n");
+        System.out.println(deckname);
+        System.out.println("\n");
 
     }
 
