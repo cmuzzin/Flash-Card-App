@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 public class CreateDeck extends Activity {
 
-    private Button savedeck;
+    //private Button savedeck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
