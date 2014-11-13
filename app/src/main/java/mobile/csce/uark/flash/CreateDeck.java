@@ -30,7 +30,7 @@ public class CreateDeck extends Activity {
 
     public void savedeck(View view){
         Deck createdeckitem = new Deck();
-        createdeckitem.setDeckname(((TextView) findViewById(R.id.textView)).getText().toString());
+        createdeckitem.setDeckname(((TextView) findViewById(R.id.editText)).getText().toString());
         Intent intent = new Intent();
         intent.putExtra("nameid", (Serializable)createdeckitem);
         setResult(RESULT_OK, intent);
