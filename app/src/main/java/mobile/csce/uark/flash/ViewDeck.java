@@ -8,6 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class ViewDeck extends Activity {
 
@@ -25,6 +29,8 @@ public class ViewDeck extends Activity {
         Bundle extras = getIntent().getExtras();
         int spot = (int) getIntent().getIntExtra("spot", 0);
         position = spot;
+
+
 
         String deckname = vd.GetDeckname();
         TextView namedisplay = (TextView) findViewById(R.id.textView2);
