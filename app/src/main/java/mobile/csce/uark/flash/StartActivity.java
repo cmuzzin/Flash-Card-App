@@ -7,27 +7,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.io.Serializable;
+import android.widget.GridView;
 import java.util.ArrayList;
 
 
 public class StartActivity extends Activity implements AdapterView.OnItemClickListener{
 
     ArrayList<Deck> createdeckItems;
-    ArrayAdapter adapter;
+    DeckArrayAdapter adapter;
+    GridView gridView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
+        gridView = (GridView) findViewById(R.id.gridView);
         createdeckItems = new ArrayList<Deck>();
-        final  ListView listview = (ListView) findViewById(R.id.listView);
-        listview.setOnItemClickListener(this);
-        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,createdeckItems);
-        listview.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(this);
+
+        adapter = new DeckArrayAdapter(this);
+
+        gridView.setAdapter(adapter);
     }
 
 
@@ -47,7 +47,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            return id == R.id.action_settings;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -62,7 +62,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
     public Intent ViewDeck(Deck deck)
     {
         Intent intent = new Intent(StartActivity.this,ViewDeck.class);
-        intent.putExtra("nameid",(Serializable) deck);
+        intent.putExtra("nameid", deck);
         return intent;
     }
 
@@ -76,19 +76,20 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
             {
                 Deck i = (Deck) data.getSerializableExtra("nameid");
                 adapter.add(i);
+                adapter.notifyDataSetChanged();
+
             }
             if (request == 2)
             {
-                Deck j = (Deck) data.getSerializableExtra("delete");
-                Bundle extras = data.getExtras();
+
                 int position = data.getIntExtra("spot", 0);
-                adapter.remove(adapter.getItem(position));
+               adapter.remove(position);
+                adapter.notifyDataSetChanged();
+
             }
         }
-        else if (result == RESULT_CANCELED)
-        {
 
-        }
+
     }
 
     @Override
@@ -98,7 +99,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         Intent intent = ViewDeck(pass);
 
         intent.putExtra("spot", position);
-        position = (int) getIntent().getIntExtra("spot", 0);
+        //position = (int) getIntent().getIntExtra("spot", 0);
 
         startActivityForResult(intent, 2);
 
