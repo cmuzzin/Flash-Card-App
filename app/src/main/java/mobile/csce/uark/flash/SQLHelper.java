@@ -23,7 +23,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     public static final  String CARD_COLUMN_NUMBER = "CardNmuber";
 
     public static final String DATABASE_NAME = "FlashDatabase.db";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_DECK_TABLE = "FlashTable";
     public static final String DATABASE_CARD_TABLE = "CardTable";
     //private SQLiteDatabase db;

@@ -17,6 +17,7 @@
     <string name="back">Back</string>
     <string name="delete">Delete</string>
     <string name="title_activity_start_screen">StartScreen</string>
+    <string name="title_activity_deck_overview">DeckOverview</string>
 
 
 </resources>

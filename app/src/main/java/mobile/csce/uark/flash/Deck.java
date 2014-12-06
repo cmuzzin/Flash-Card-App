@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by chrismuzzin on 11/11/14.
  */
-public class Deck{
+public class Deck implements Serializable{
 
     Deck(long id, String deckname)
     {

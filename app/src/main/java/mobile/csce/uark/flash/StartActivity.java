@@ -11,11 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class StartActivity extends Activity {
+public class StartActivity extends Activity implements AdapterView.OnItemClickListener {
 
     List<Deck> createdeckItems;
     DeckArrayAdapter adapter;
@@ -30,11 +33,14 @@ public class StartActivity extends Activity {
         dataSource.open();
         createdeckItems = dataSource.GetAllDecks();
 
+
+
         setContentView(R.layout.activity_start);
         gridView = (GridView) findViewById(R.id.gridView);
         //createdeckItems = new ArrayList<Deck>();
 
        // gridView.setOnItemClickListener(this);
+        gridView.setOnItemClickListener(this);
 
         adapter = new DeckArrayAdapter(this,createdeckItems);
 
@@ -101,6 +107,31 @@ public class StartActivity extends Activity {
             }
         }
 
+
+    }
+
+    public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+        // Then you start a new Activity via Intent
+        Deck packed = (Deck) adapter.getItem(position);
+        Intent i = packitup(packed);
+        i.putExtra("Deck2", (Serializable)packed);
+        //System.out.println("\n");
+        //System.out.print(position);
+        //System.out.println("\n");
+        i.putExtra("position", position);
+        //position = (int) getIntent().getIntExtra("position", 0);
+        //System.out.println("\n");
+        //System.out.print(position);
+        //System.out.println("\n");
+
+        startActivityForResult(i, 9);
+    }
+
+    public Intent packitup(Deck d){
+
+        Intent i = new Intent(this, DeckOverview.class);
+        i.putExtra("deck",(Serializable)d);
+        return i;
 
     }
 
