@@ -8,43 +8,42 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jonathan on 11/25/14.
+ * Created by Jonathan on 12/6/14.
  */
-public class DeckArrayAdapter extends BaseAdapter {
-    List<Deck> decks;
+public class CardArrayAdapter extends BaseAdapter {
+    List<Card> cards;
     Context mContext;
     LayoutInflater myInflater;
 
 
 
-    public DeckArrayAdapter( Context c, List<Deck> deck)
+    public CardArrayAdapter( Context c, List<Card> card)
     {
-        decks =  deck;
+        cards =  card;
         mContext = c;
         myInflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public int getCount() {
-        return decks.size();
+        return cards.size();
     }
 
 
     public Object getItem(int position) {
 
-        return decks.get(position);
+        return cards.get(position);
     }
-    public void add(Deck item)
+    public void add(Card item)
     {
-        decks.add(item);
+        cards.add(item);
     }
 
     public void remove(int position)
     {
-        decks.remove(position);
+        cards.remove(position);
     }
 
 
@@ -55,10 +54,10 @@ public class DeckArrayAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-            convertView = myInflater.inflate(R.layout.deck_item_view,parent,false);
+        convertView = myInflater.inflate(R.layout.deck_item_view,parent,false);
 
         TextView title = (TextView)convertView.findViewById(R.id.textview);
-        title.setText(decks.get(position).DeckName);
+        title.setText(cards.get(position).getFrontSide());
         title.setTextColor(Color.BLACK);
 
         return convertView;

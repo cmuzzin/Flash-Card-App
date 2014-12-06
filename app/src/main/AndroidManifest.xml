@@ -26,9 +26,9 @@
             android:label="@string/title_activity_view_deck" >
         </activity>
         <activity
-            android:name=".CardCreation"
-            android:label="@string/title_activity_card_creation"
-            android:screenOrientation="landscape" >
+            android:name=".DeckOverview"
+            android:label="@string/title_activity_deck_overview"
+            android:screenOrientation = "portrait">
         </activity>
     </application>
 

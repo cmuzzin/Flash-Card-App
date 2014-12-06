@@ -8,15 +8,29 @@ public class Card {
 
     private String FrontSide;
     private String BackSide;
-    private Integer Number;
-    public Integer ID;
-    public Integer DeckID;
+    private long Number;
+    public long ID;
+    public long DeckID;
 
-    public Card(String frontSide, Integer number, Integer ID, Integer deckID) {
+    public long getDeckID() {
+        return DeckID;
+    }
+
+
+
+    public Card(long id, String frontSide, String backSide, long number, long deckID) {
         FrontSide = frontSide;
+        BackSide = backSide;
         Number = number;
-        this.ID = ID;
+        ID = id;
         DeckID = deckID;
+    }
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
     public String getFrontSide() {
@@ -34,7 +48,7 @@ public class Card {
     public void setBackSide(String backSide) {
         BackSide = backSide;
     }
-    public Integer getNumber() {
+    public long getNumber() {
         return Number;
     }
 
