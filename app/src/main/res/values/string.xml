@@ -8,13 +8,15 @@
     <string name="edit_deck">Edit</string>
     <string name="decks_title">Decks</string>
     <string name="title_activity_create_deck">CreateDeck</string>
-    <string name="Deck_Name">Name:</string>
+    <string name="Deck_Name">Deck Name:</string>
     <string name="enter_deck_name">name your deck here</string>
     <string name="done_naming_deck">Done</string>
     <string name="title_activity_view_deck">ViewDeck</string>
-    <string name="view_deck">Deck:</string>
-    <string name="deck_name" />
+    <string name="view_deck">Deck Name:</string>
+    <string name="deck_name"></string>
     <string name="back">Back</string>
     <string name="delete">Delete</string>
+    <string name="title_activity_start_screen">StartScreen</string>
+
 
 </resources>
