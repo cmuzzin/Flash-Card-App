@@ -83,7 +83,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
             {
 
                 int position = data.getIntExtra("spot", 0);
-               adapter.remove(position);
+                adapter.remove(position);
                 adapter.notifyDataSetChanged();
 
             }
