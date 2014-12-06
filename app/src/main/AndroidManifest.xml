@@ -25,12 +25,7 @@
             android:name=".ViewDeck"
             android:label="@string/title_activity_view_deck" >
         </activity>
-        <provider
-            android:name="mobile.csce.uark.flash.FlashDatabase"
-            android:authorities="mobile.csce.uark.flash"
-            android:enabled="true"
-            android:exported="true" >
-        </provider>
+
     </application>
 
 </manifest>

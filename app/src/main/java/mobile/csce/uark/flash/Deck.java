@@ -5,7 +5,14 @@ import java.io.Serializable;
 /**
  * Created by chrismuzzin on 11/11/14.
  */
-public class Deck implements Serializable {
+public class Deck{
+
+    Deck(long id, String deckname)
+    {
+        ID = id;
+        DeckName = deckname;
+    }
+
     public long getID() {
         return ID;
     }
@@ -15,25 +22,25 @@ public class Deck implements Serializable {
     }
 
     private long ID;
-    public String deckname;
+    public String DeckName;
 
 
 
 public String GetDeckname()
 {
-    return deckname;
+    return DeckName;
 }
 
 public void setDeckname(String n)
 {
-    deckname = n;
+    DeckName = n;
 }
 
 @Override
 public String toString()
 {
 
-    return deckname;
+    return DeckName;
 }
 
 }

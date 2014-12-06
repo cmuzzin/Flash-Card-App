@@ -29,11 +29,16 @@ public class CreateDeck extends Activity {
     }
 
     public void savedeck(View view){
-        Deck createdeckitem = new Deck();
-        createdeckitem.setDeckname(((TextView) findViewById(R.id.editText)).getText().toString());
-        Intent intent = new Intent();
-        intent.putExtra("nameid", (Serializable)createdeckitem);
-        setResult(RESULT_OK, intent);
+        Deck createdeckitem = new Deck(0,((TextView) findViewById(R.id.editText)).getText().toString());
+        FlashDatabase db = new FlashDatabase(this);
+        db.open();
+        db.InsertDeck(createdeckitem);
+        db.close();
+        Intent i = new Intent();
+        setResult(RESULT_OK,i);
+
+        //createdeckitem.setDeckname(((TextView) findViewById(R.id.editText)).getText().toString());
+
         finish();
 
     }
