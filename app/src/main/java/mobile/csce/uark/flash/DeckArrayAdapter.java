@@ -59,7 +59,7 @@ public class DeckArrayAdapter extends BaseAdapter {
 
         TextView title = (TextView)convertView.findViewById(R.id.textview);
         title.setText(decks.get(position).DeckName);
-        title.setTextColor(Color.WHITE);
+        title.setTextColor(Color.BLACK);
 
         return convertView;
     }
