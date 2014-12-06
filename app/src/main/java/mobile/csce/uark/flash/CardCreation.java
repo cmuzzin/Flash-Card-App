@@ -62,7 +62,7 @@ package mobile.csce.uark.flash;
                 Card newCard;
                  String front = fronttext.getText().toString();
                 String back = backtext.getText().toString();
-                 newCard = new Card(front, back, 0, 0, 0);
+                 newCard = new Card(0,front,back,0,0);
 
                  finish();
 

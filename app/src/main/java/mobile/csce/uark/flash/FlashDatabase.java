@@ -31,7 +31,7 @@ public class FlashDatabase{
         values.put(myOpenHelper.DECK_COLUMN_NAME,d.DeckName);
         long insertID = database.insert(myOpenHelper.DATABASE_DECK_TABLE,null,values);
         d.setID(insertID);
-        
+
        //Cursor cursor = database.query(myOpenHelper.DATABASE_DECK_TABLE,myOpenHelper.allColumns,myOpenHelper.DECK_COLUMN_ID + " = " + insertID, null,null,null,null);
         //cursor.moveToFirst();
     }
