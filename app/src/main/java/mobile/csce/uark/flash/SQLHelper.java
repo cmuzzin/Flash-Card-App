@@ -12,20 +12,21 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public static final String DECK_COLUMN_ID = "_id";
     public static final String CARD_COLUMN_ID = "_id";
-    public static final String DECK_COLUMN_DATE = "date";
-    public static final String CARD_COLUMN_DATE = "date";
+    //public static final String DECK_COLUMN_DATE = "date";
+    //public static final String CARD_COLUMN_DATE = "date";
     public static final String DECK_COLUMN_NAME = "Name";
-    public static final String DECK_COLUMN_NUMCARDS = "numberofcards";
-    public static final String DECK_COLUMN_CARDKEYS = "cardkeys";
+    //public static final String DECK_COLUMN_NUMCARDS = "numberofcards";
+    //public static final String DECK_COLUMN_CARDKEYS = "cardkeys";
     public static final String CARD_COLUMN_FRONT = "frontcardinfo";
     public static final String CARD_COLUMN_BACK = "backcardinfo";
     public static final String CARD_COLUMN_DECK_ID = "Carddeckid";
+    public static final  String CARD_COLUMN_NUMBER = "CardNmuber";
 
     public static final String DATABASE_NAME = "FlashDatabase.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_DECK_TABLE = "FlashTable";
     public static final String DATABASE_CARD_TABLE = "CardTable";
-    private SQLiteDatabase db;
+    //private SQLiteDatabase db;
 
     private static final String DATABASE_CREATE_DECK_TABLE =
             "create table "+ DATABASE_DECK_TABLE + " (" + DECK_COLUMN_ID +
@@ -37,6 +38,7 @@ public class SQLHelper extends SQLiteOpenHelper {
                     " integer primary key autoincrement," +
                     CARD_COLUMN_FRONT + " text not null, " +
                     CARD_COLUMN_BACK + " text not null, " +
+                    CARD_COLUMN_NUMBER+" INTEGER NOT NULL, "+
                     CARD_COLUMN_DECK_ID+" integer, "+
                     " FOREIGN KEY("+CARD_COLUMN_DECK_ID+") REFERENCES "
                     +DATABASE_DECK_TABLE+" ("+DECK_COLUMN_ID+"));"

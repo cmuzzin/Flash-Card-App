@@ -47,6 +47,9 @@ public class FlashDatabase{
     public void InsertCard(Card c)
     {
         ContentValues values = new ContentValues();
+        values.put(myOpenHelper.CARD_COLUMN_NUMBER,c.getNumber());
+        values.put(myOpenHelper.CARD_COLUMN_DECK_ID,c.getDeckID());
+        values.put(myOpenHelper.CARD_COLUMN_BACK,c.getBackSide());
         values.put(myOpenHelper.CARD_COLUMN_FRONT, c.getFrontSide());
         long insertID = database.insert(myOpenHelper.DATABASE_CARD_TABLE, null, values);
         c.setID(insertID);
@@ -57,6 +60,27 @@ public class FlashDatabase{
         long id = c.getID();
         database.delete(myOpenHelper.DATABASE_CARD_TABLE, myOpenHelper.CARD_COLUMN_ID + " = " + id, null);
         System.out.println("YOU DELETED CARD: " + myOpenHelper.CARD_COLUMN_ID + " = " + id);
+    }
+
+    public List<Card> GetAllCardsInADeck(Deck d)
+    {
+        List<Card> cards = new ArrayList<Card>();
+        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+ " WHERE " + SQLHelper.CARD_COLUMN_DECK_ID+" = "+d.getID()+"order by "+SQLHelper.CARD_COLUMN_NUMBER+ " desc;",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast());
+        {
+            Card c = cursorToCard(cursor);
+            cards.add(c);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return cards;
+    }
+    private Card cursorToCard(Cursor cursor)
+    {
+        Card c = new Card(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getLong(3),cursor.getLong(4));
+        return c;
+
     }
 
     public List<Deck> GetAllDecks()
@@ -85,6 +109,8 @@ public class FlashDatabase{
         return d;
 
     }
+
+
 
 
 }
