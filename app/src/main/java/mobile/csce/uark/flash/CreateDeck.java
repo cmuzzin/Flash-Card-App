@@ -3,6 +3,7 @@ package mobile.csce.uark.flash;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,7 @@ public class CreateDeck extends Activity {
 
         {
             toast.setText("Deck needs a name");
+            toast.setGravity(Gravity.TOP| Gravity.LEFT, 0 ,500);
             toast.show();
             setResult(RESULT_CANCELED,intent);
 
