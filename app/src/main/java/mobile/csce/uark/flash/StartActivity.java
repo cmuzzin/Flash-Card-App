@@ -55,7 +55,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
     public void StartCreateDeckActivity(View view)
     {
         Intent intent = new Intent(this,CreateDeck.class);
-        startActivityForResult(intent, 1);
+        startActivity(intent);
 
     }
 
@@ -66,31 +66,6 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         return intent;
     }
 
-    protected void onActivityResult(int request, int result, Intent data)
-    {
-        super.onActivityResult(request, result, data);
-        if (result == RESULT_OK)
-
-        {
-            if (request == 1)
-            {
-                Deck i = (Deck) data.getSerializableExtra("nameid");
-                adapter.add(i);
-                adapter.notifyDataSetChanged();
-
-            }
-            if (request == 2)
-            {
-
-                int position = data.getIntExtra("spot", 0);
-                adapter.remove(position);
-                adapter.notifyDataSetChanged();
-
-            }
-        }
-
-
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -19,7 +19,9 @@
         </activity>
         <activity
             android:name=".CreateDeck"
-            android:label="@string/title_activity_create_deck" >
+            android:label="@string/title_activity_create_deck"
+            >
+
         </activity>
         <activity
             android:name=".ViewDeck"
