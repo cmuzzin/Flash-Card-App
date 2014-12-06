@@ -12,7 +12,7 @@
     <string name="enter_deck_name">name your deck here</string>
     <string name="done_naming_deck">Done</string>
     <string name="title_activity_view_deck">ViewDeck</string>
-    <string name="view_deck">Deck:</string>
+    <string name="view_deck">Deck Name:</string>
     <string name="deck_name"></string>
     <string name="back">Back</string>
     <string name="delete">Delete</string>
