@@ -44,4 +44,32 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/button"
         android:onClick="deleteitem"/>
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:columnWidth="150dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+
+        android:paddingTop="10dp"
+        android:clipToPadding="false"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button3"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/button2"
+        android:onClick="gotoCardcreation"/>
+
 </RelativeLayout>
+
+
