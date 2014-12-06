@@ -1,6 +1,7 @@
 package mobile.csce.uark.flash;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class DeckArrayAdapter extends BaseAdapter {
 
         TextView title = (TextView)convertView.findViewById(R.id.textview);
         title.setText(decks.get(position).deckname);
+        title.setTextColor(Color.WHITE);
 
         return convertView;
     }
