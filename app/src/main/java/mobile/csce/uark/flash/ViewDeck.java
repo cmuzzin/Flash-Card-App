@@ -68,5 +68,9 @@ public class ViewDeck extends Activity {
 
         finish();
     }
+    public void gotoCardcreation(View view){
+        Intent intent = new Intent(this, CardCreation.class);
+        startActivity(intent);
+    }
 
 }
