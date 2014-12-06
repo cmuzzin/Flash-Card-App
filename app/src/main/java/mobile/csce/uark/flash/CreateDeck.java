@@ -36,13 +36,16 @@ public class CreateDeck extends Activity {
     public void savedeck(View view){
 
         Deck createdeckitem = new Deck();
-        createdeckitem.setDeckname(((TextView) findViewById(R.id.editText)).getText().toString());
+        createdeckitem.setDeckname(((EditText) findViewById(R.id.editText)).getText().toString());
         Intent intent = new Intent();
         intent.putExtra("nameid", (Serializable)createdeckitem);
         TextView deckname = (TextView) findViewById(R.id.editText);
         String dn = deckname.getText().toString();
         System.out.println("Value of my string" + dn);
-        if (dn.isEmpty())
+        String temp = dn.trim();
+       //if ((dn.isEmpty()) || (dn.matches("[a-zA-Z1-9]+") == false) || (dn.matches(".*\\w.*")))
+        if (temp.equals(""))
+
         {
             toast.setText("Deck needs a name");
             toast.show();
