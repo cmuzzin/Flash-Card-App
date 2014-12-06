@@ -4,7 +4,7 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:src="@drawable/paperimg"
+        android:src="@drawable/paper"
         android:layout_height="fill_parent"
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
