@@ -1,7 +1,10 @@
 package mobile.csce.uark.flash;
 
 import android.app.Activity;
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,23 +12,31 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class StartActivity extends Activity implements AdapterView.OnItemClickListener{
+public class StartActivity extends Activity {
 
-    ArrayList<Deck> createdeckItems;
+    List<Deck> createdeckItems;
     DeckArrayAdapter adapter;
     GridView gridView;
+    private FlashDatabase dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dataSource = new FlashDatabase(this);
+        dataSource.open();
+        createdeckItems = dataSource.GetAllDecks();
+
         setContentView(R.layout.activity_start);
         gridView = (GridView) findViewById(R.id.gridView);
-        createdeckItems = new ArrayList<Deck>();
+        //createdeckItems = new ArrayList<Deck>();
 
-        gridView.setOnItemClickListener(this);
+       // gridView.setOnItemClickListener(this);
 
-        adapter = new DeckArrayAdapter(this);
+        adapter = new DeckArrayAdapter(this,createdeckItems);
 
         gridView.setAdapter(adapter);
     }
@@ -59,12 +70,12 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
 
     }
 
-    public Intent ViewDeck(Deck deck)
-    {
-        Intent intent = new Intent(StartActivity.this,ViewDeck.class);
-        intent.putExtra("nameid", deck);
-        return intent;
-    }
+    //public Intent ViewDeck(Deck deck)
+    //{
+       // Intent intent = new Intent(StartActivity.this,ViewDeck.class);
+        //intent.putExtra("nameid", deck);
+        //return intent;
+    //}
 
     protected void onActivityResult(int request, int result, Intent data)
     {
@@ -74,16 +85,17 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         {
             if (request == 1)
             {
-                Deck i = (Deck) data.getSerializableExtra("nameid");
-                adapter.add(i);
+                createdeckItems = dataSource.GetAllDecks();
+                adapter = new DeckArrayAdapter(this,createdeckItems);
                 adapter.notifyDataSetChanged();
+                gridView.setAdapter(adapter);
 
             }
             if (request == 2)
             {
 
                 int position = data.getIntExtra("spot", 0);
-                adapter.remove(position);
+               adapter.remove(position);
                 adapter.notifyDataSetChanged();
 
             }
@@ -92,16 +104,5 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Deck pass = (Deck) adapter.getItem(position);
-        Intent intent = ViewDeck(pass);
-
-        intent.putExtra("spot", position);
-        //position = (int) getIntent().getIntExtra("spot", 0);
-
-        startActivityForResult(intent, 2);
-
-    }
 }
