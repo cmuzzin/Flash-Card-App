@@ -65,14 +65,14 @@ public class ViewDeck extends Activity {
         ViewDeck.this.finish();
     }
 
-    //public void deleteitem(View view)
-    //{
-     //   Intent intent = new Intent();
-      //  intent.putExtra("spot", position);
-       // intent.putExtra("delete", (Deck) getIntent().getSerializableExtra("nameid"));
-        //setResult(RESULT_OK, intent);
+    public void deleteitem(View view)
+    {
+        Intent intent = new Intent();
+        intent.putExtra("spot", position);
+        intent.putExtra("delete", (Deck) getIntent().getSerializableExtra("nameid"));
+        setResult(RESULT_OK, intent);
 
-    //    finish();
-    //}
+        finish();
+    }
 
 }

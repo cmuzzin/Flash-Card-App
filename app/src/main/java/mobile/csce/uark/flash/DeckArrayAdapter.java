@@ -1,7 +1,6 @@
 package mobile.csce.uark.flash;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +8,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Jonathan on 11/25/14.
  */
 public class DeckArrayAdapter extends BaseAdapter {
-    List<Deck> decks;
+    ArrayList<Deck> decks;
     Context mContext;
     LayoutInflater myInflater;
 
 
-
-    public DeckArrayAdapter( Context c, List<Deck> deck)
+    public DeckArrayAdapter( Context c)
     {
-        decks =  deck;
+        decks = new ArrayList<Deck>();
         mContext = c;
         myInflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -58,8 +54,7 @@ public class DeckArrayAdapter extends BaseAdapter {
             convertView = myInflater.inflate(R.layout.deck_item_view,parent,false);
 
         TextView title = (TextView)convertView.findViewById(R.id.textview);
-        title.setText(decks.get(position).DeckName);
-        title.setTextColor(Color.BLACK);
+        title.setText(decks.get(position).deckname);
 
         return convertView;
     }
