@@ -1,46 +1,46 @@
 package mobile.csce.uark.flash;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by chrismuzzin on 11/11/14.
  */
-public class Deck{
+public class Deck implements Serializable {
 
-    Deck(long id, String deckname)
-    {
-        ID = id;
-        DeckName = deckname;
-    }
-
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
-    private long ID;
-    public String DeckName;
+    public String deckname;
+    private Date date;
 
 
 
 public String GetDeckname()
 {
-    return DeckName;
+    return deckname;
 }
+public Date getDate(){
+    return date;
+}
+
+ public void setDate(Date d ){
+     date = d;
+
+ }
+
 
 public void setDeckname(String n)
 {
-    DeckName = n;
+    deckname = n;
 }
 
 @Override
 public String toString()
 {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    String dateString = sdf.format(date);
 
-    return DeckName;
+    return  deckname + " " +"(" + dateString + ")";
+
 }
 
 }

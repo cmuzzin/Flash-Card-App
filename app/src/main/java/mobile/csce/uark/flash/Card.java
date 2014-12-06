@@ -9,7 +9,7 @@ public class Card {
     private String FrontSide;
     private String BackSide;
     private Integer Number;
-    public long ID;
+    public Integer ID;
     public Integer DeckID;
 
     public Card(String frontSide, Integer number, Integer ID, Integer deckID) {
@@ -17,13 +17,6 @@ public class Card {
         Number = number;
         this.ID = ID;
         DeckID = deckID;
-    }
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
     }
 
     public String getFrontSide() {

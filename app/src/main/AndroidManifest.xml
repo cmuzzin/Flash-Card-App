@@ -25,7 +25,10 @@
             android:name=".ViewDeck"
             android:label="@string/title_activity_view_deck" >
         </activity>
-
+        <activity
+            android:name=".StartScreen"
+            android:label="@string/title_activity_start_screen" >
+        </activity>
     </application>
 
 </manifest>
