@@ -58,7 +58,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
        database.execSQL(DATABASE_CREATE_DECK_TABLE);
-       //database.execSQL(DATABASE_CREATE_CARD_TABLE);
+       database.execSQL(DATABASE_CREATE_CARD_TABLE);
     }
 
     @Override

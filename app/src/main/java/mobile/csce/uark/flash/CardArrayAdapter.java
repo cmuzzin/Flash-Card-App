@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by Jonathan on 12/6/14.
  */
-public class CardArrayAdapter {
+public class CardArrayAdapter extends BaseAdapter {
     List<Card> cards;
     Context mContext;
     LayoutInflater myInflater;

@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name=".DeckOverview"
-            android:label="@string/title_activity_deck_overview" >
+            android:label="@string/title_activity_deck_overview"
+            android:screenOrientation = "portrait">
         </activity>
     </application>
 

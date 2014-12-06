@@ -4,10 +4,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DeckOverview extends Activity {
+
+    CardArrayAdapter adapter;
+    FlashDatabase database;
+    GridView gridView;
+    List<Card> cards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +29,16 @@ public class DeckOverview extends Activity {
         System.out.println("THE DECK NAME IS: " + name);
         TextView Dname = (TextView) findViewById(R.id.textView);
         Dname.setText(name);
+        database = new FlashDatabase(this);
+        database.open();
+        cards = database.GetAllCardsInADeck(curdeck);
+       // cards = new ArrayList<Card>();
+        //cards.add(new Card(2,"TEST","TEST",1,2));
+        gridView = (GridView) findViewById(R.id.gridView);
+        adapter = new CardArrayAdapter(this,cards);
+        gridView.setAdapter(adapter);
+
+
 
     }
 

@@ -31,6 +31,7 @@ public class FlashDatabase{
         values.put(myOpenHelper.DECK_COLUMN_NAME,d.DeckName);
         long insertID = database.insert(myOpenHelper.DATABASE_DECK_TABLE,null,values);
         d.setID(insertID);
+        
        //Cursor cursor = database.query(myOpenHelper.DATABASE_DECK_TABLE,myOpenHelper.allColumns,myOpenHelper.DECK_COLUMN_ID + " = " + insertID, null,null,null,null);
         //cursor.moveToFirst();
     }
@@ -65,14 +66,15 @@ public class FlashDatabase{
     public List<Card> GetAllCardsInADeck(Deck d)
     {
         List<Card> cards = new ArrayList<Card>();
-        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+ " WHERE " + SQLHelper.CARD_COLUMN_DECK_ID+" = "+d.getID()+"order by "+SQLHelper.CARD_COLUMN_NUMBER+ " desc;",null);
+        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+d.getID()+ " order by "+SQLHelper.CARD_COLUMN_NUMBER+ " desc;",null);
         cursor.moveToFirst();
-        while(!cursor.isAfterLast());
+        Card c;
+        while(!cursor.isAfterLast())
         {
-            Card c = cursorToCard(cursor);
+            c = cursorToCard(cursor);
             cards.add(c);
             cursor.moveToNext();
-        }
+       }
         cursor.close();
         return cards;
     }
