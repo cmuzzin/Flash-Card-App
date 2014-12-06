@@ -22,7 +22,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     public static final String CARD_COLUMN_DECK_ID = "Carddeckid";
 
     public static final String DATABASE_NAME = "FlashDatabase.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_DECK_TABLE = "FlashTable";
     public static final String DATABASE_CARD_TABLE = "CardTable";
     private SQLiteDatabase db;
@@ -32,15 +32,17 @@ public class SQLHelper extends SQLiteOpenHelper {
                     " integer primary key autoincrement, " + DECK_COLUMN_NAME + " text not null);"
             ;
 
-    /*private static final String DATABASE_CREATE_CARD_TABLE =
+    private static final String DATABASE_CREATE_CARD_TABLE =
             "create table "+ DATABASE_CARD_TABLE + " (" + CARD_COLUMN_ID +
-                    " integer primary key autoincrement, FOREIGN KEY (" +CARD_COLUMN_DECK_ID+") references "+DATABASE_DECK_TABLE+ "("+DECK_COLUMN_ID+"),"+
+                    " integer primary key autoincrement," +
                     CARD_COLUMN_FRONT + " text not null, " +
                     CARD_COLUMN_BACK + " text not null, " +
-                    CARD_COLUMN_DATE + " long);"
+                    CARD_COLUMN_DECK_ID+" integer, "+
+                    " FOREIGN KEY("+CARD_COLUMN_DECK_ID+") REFERENCES "
+                    +DATABASE_DECK_TABLE+" ("+DECK_COLUMN_ID+"));"
 
             ;
-*/
+
     private static final String DATABASE_DECK_DROP_CMD =
             "drop table " + DATABASE_DECK_TABLE;
 
@@ -65,7 +67,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         db.execSQL(DATABASE_DECK_DROP_CMD);
         db.execSQL(DATABASE_CREATE_DECK_TABLE);
         db.execSQL(DATABASE_CARD_DROP_CMD);
-        //db.execSQL(DATABASE_CREATE_CARD_TABLE);
+        db.execSQL(DATABASE_CREATE_CARD_TABLE);
     }
 
 
