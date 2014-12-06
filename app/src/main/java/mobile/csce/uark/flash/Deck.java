@@ -6,7 +6,15 @@ import java.io.Serializable;
  * Created by chrismuzzin on 11/11/14.
  */
 public class Deck implements Serializable {
+    public long getID() {
+        return ID;
+    }
 
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
+    private long ID;
     public String deckname;
 
 

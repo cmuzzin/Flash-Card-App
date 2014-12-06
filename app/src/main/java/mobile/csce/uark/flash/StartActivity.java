@@ -1,7 +1,10 @@
 package mobile.csce.uark.flash;
 
 import android.app.Activity;
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +14,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 
 
-public class StartActivity extends Activity implements AdapterView.OnItemClickListener{
+public class StartActivity extends Activity implements AdapterView.OnItemClickListener,  LoaderManager.LoaderCallbacks<Cursor>{
 
     ArrayList<Deck> createdeckItems;
     DeckArrayAdapter adapter;
@@ -102,6 +105,21 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         //position = (int) getIntent().getIntExtra("spot", 0);
 
         startActivityForResult(intent, 2);
+
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
 
     }
 }
