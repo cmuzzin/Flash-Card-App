@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="mobile.csce.uark.flash.CardCreation">
+    tools:context="mobile.csce.uark.flash.CardCreation" android:id="@+id/TouchView">
 
     <ImageView android:id="@+id/menuBackground"
         android:src="@drawable/wood"
@@ -17,11 +17,6 @@
         android:layout_height="513dp"
         android:layout_width="550dp"
         android:layout_marginLeft="25dp" />
-    <RelativeLayout
-        android:id="@+id/fr1_id"
-        android:layout_height="513dp"
-        android:layout_width="550dp"
-        android:layout_marginLeft="25dp"/>
 
 
     <EditText
@@ -55,19 +50,18 @@
         android:layout_alignParentEnd="true"
         android:gravity="center"
         android:layout_marginRight="25dp"
+
         />
+    <RelativeLayout
+        android:id="@+id/fr1_id"
+        android:layout_height="513dp"
+        android:layout_width="550dp"
+        android:layout_marginLeft="25dp"/>
 
 
 
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back Side "
-        android:id="@+id/BackSide"
-        android:layout_alignTop="@+id/Save"
-        android:layout_alignEnd="@+id/fr1_id" />
+
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -76,7 +70,7 @@
         android:text="Save"
         android:id="@+id/Save"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/front"
+        android:layout_toEndOf="@+id/button5"
         android:layout_marginStart="60dp" />
 
 
@@ -88,16 +82,11 @@
         android:id="@+id/button5"
         android:onClick="GoBackToCardsView"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/BackSide"
         android:layout_marginEnd="65dp" />
 
 
-    <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Front Side"
-    android:id="@+id/front"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentStart="true" />
+
+
+
 
 </RelativeLayout>

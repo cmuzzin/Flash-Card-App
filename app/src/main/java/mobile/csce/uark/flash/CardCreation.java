@@ -5,32 +5,57 @@ package mobile.csce.uark.flash;
     import android.app.FragmentTransaction;
     import android.content.Intent;
     import android.os.Bundle;
+    import android.os.Handler;
     import android.text.Editable;
     import android.text.InputFilter;
     import android.text.TextWatcher;
+    import android.view.GestureDetector;
     import android.view.Menu;
     import android.view.MenuItem;
+    import android.view.MotionEvent;
     import android.view.View;
     import android.widget.Button;
     import android.widget.EditText;
+    import android.widget.ImageView;
 
 
-    public class CardCreation extends Activity {
-        Button B1,B2,save;
+public class CardCreation extends Activity implements FragmentManager.OnBackStackChangedListener,View.OnClickListener {
+        Button save;
+        private View imageView;
         FlashDatabase database;
         long deckid;
         private EditText fronttext;
         private EditText backtext;
+        private boolean mShowingBack = false;
+        private Handler mHandler = new Handler();
+        FragmentManager FM;
+        FragmentTransaction FT;
+        Fragmenttwo F2;
+        FragmentOne F1;
+        private GestureDetector gestureDetector;
+        View.OnTouchListener gestureListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FM = getFragmentManager();
+        FT = FM.beginTransaction();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_creation);
         fronttext = (EditText) findViewById(R.id.FrontCardText);
         backtext = (EditText) findViewById(R.id.BackCardText);
-        B1 = (Button) findViewById(R.id.front);
-        B2 = (Button) findViewById(R.id.BackSide);
+
+        F2 = new Fragmenttwo();
+        fronttext.setMovementMethod(null);
+        fronttext.setMaxLines(12);
+
+        imageView = findViewById(R.id.TouchView);
+
+        F1 = new FragmentOne();
+        //FT.add(R.id.fr1_id, F1);
+
+        //FT.add(R.id.fr1_id, F2);
+
         save = (Button) findViewById(R.id.Save);
-        fronttext.setVisibility(View.GONE);
+        fronttext.setVisibility(View.VISIBLE);
         backtext.setVisibility(View.GONE);
         database = new FlashDatabase(this);
         deckid = getIntent().getLongExtra("D",0);
@@ -58,36 +83,7 @@ package mobile.csce.uark.flash;
             }
         });
 
-        B1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fronttext.setMovementMethod(null);
-                fronttext.setMaxLines(12);
-                FragmentManager FM = getFragmentManager();
-                FragmentTransaction FT = FM.beginTransaction();
-                FragmentOne F1 = new FragmentOne();
-                FT.add(R.id.fr1_id, F1);
-                fronttext.setVisibility(View.VISIBLE);
-                backtext.setVisibility(View.GONE);
-                FT.commit();
-            }
-        });
-        B2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-
-                FragmentManager FM = getFragmentManager();
-                FragmentTransaction FT = FM.beginTransaction();
-                Fragmenttwo F2 = new Fragmenttwo();
-
-                FT.add(R.id.fr1_id, F2);
-                fronttext.setVisibility(View.GONE);
-                backtext.setVisibility(View.VISIBLE);
-                FT.commit();
-            }
-        });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +98,59 @@ package mobile.csce.uark.flash;
 
             }
         });
+
+        if (savedInstanceState == null) {
+            // If there is no saved instance state, add a fragment representing the
+            // front of the card to this activity. If there is saved instance state,
+            // this fragment will have already been added to the activity.
+            getFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fr2_id, new FragmentOne())
+                    .commit();
+        } else {
+            mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
+        }
+
+        // Monitor back stack changes to ensure the action bar shows the appropriate
+        // button (either "photo" or "info").
+        getFragmentManager().addOnBackStackChangedListener(this);
+
+        gestureDetector = new GestureDetector(this, new GestureHelper());
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (gestureDetector.onTouchEvent(event) == true)
+                {
+                    v.setEnabled(false);
+                    flipCard();
+                    if (fronttext.getVisibility()==View.VISIBLE) {
+                        fronttext.setVisibility(View.GONE);
+                        backtext.setVisibility(View.VISIBLE);
+                    }
+                    else if(fronttext.getVisibility()==View.GONE)
+                    {
+                        backtext.setVisibility(View.GONE);
+                        fronttext.setVisibility(View.VISIBLE);
+                    }
+                    v.setEnabled(true);
+                    //v.requestFocus();
+                }
+                else
+                {
+                    v.requestFocus();
+                }
+
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+
+        fronttext.setOnTouchListener(gestureListener);
+        backtext.setOnTouchListener(gestureListener);
+        //F1.setOnTouchListener(gestureListener);
+
+        //fronttext.setOnTouchListener(gestureListener);
+
+       // backtext.setOnClickListener(CardCreation.this);
+        //backtext.setOnTouchListener(gestureListener);
 
     }
 
@@ -132,4 +181,66 @@ package mobile.csce.uark.flash;
         {
             this.finish();
         }
-}
+
+        @Override
+        public void onBackStackChanged() {
+            mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
+
+            // When the back stack changes, invalidate the options menu (action bar).
+            invalidateOptionsMenu();
+        }
+
+        private void flipCard() {
+            if (mShowingBack) {
+                getFragmentManager().popBackStack();
+                return;
+            }
+
+            // Flip to the back.
+
+            mShowingBack = true;
+
+            // Create and commit a new fragment transaction that adds the fragment for the back of
+            // the card, uses custom animations, and is part of the fragment manager's back stack.
+
+            getFragmentManager()
+                    .beginTransaction()
+
+                            // Replace the default fragment animations with animator resources representing
+                            // rotations when switching to the back of the card, as well as animator
+                            // resources representing rotations when flipping back to the front (e.g. when
+                            // the system Back button is pressed).
+                    .setCustomAnimations(
+                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+
+                            // Replace any fragments currently in the container view with a fragment
+                            // representing the next page (indicated by the just-incremented currentPage
+                            // variable).
+                    .replace(R.id.fr2_id,new Fragmenttwo() )
+
+                            // Add this transaction to the back stack, allowing users to press Back
+                            // to get to the front of the card.
+                    .addToBackStack(null)
+
+                            // Commit the transaction.
+                    .commit();
+
+            // Defer an invalidation of the options menu (on modern devices, the action bar). This
+            // can't be done immediately because the transaction may not yet be committed. Commits
+            // are asynchronous in that they are posted to the main thread's message loop.
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    invalidateOptionsMenu();
+                }
+            });
+        }
+
+
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
