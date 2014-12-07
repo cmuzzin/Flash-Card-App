@@ -5,6 +5,9 @@ package mobile.csce.uark.flash;
     import android.app.FragmentTransaction;
     import android.content.Intent;
     import android.os.Bundle;
+    import android.text.Editable;
+    import android.text.InputFilter;
+    import android.text.TextWatcher;
     import android.view.Menu;
     import android.view.MenuItem;
     import android.view.View;
@@ -16,28 +19,50 @@ package mobile.csce.uark.flash;
         Button B1,B2,save;
         FlashDatabase database;
         long deckid;
-
-
+        private EditText fronttext;
+        private EditText backtext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_creation);
+        fronttext = (EditText) findViewById(R.id.FrontCardText);
+        backtext = (EditText) findViewById(R.id.BackCardText);
         B1 = (Button) findViewById(R.id.front);
         B2 = (Button) findViewById(R.id.BackSide);
         save = (Button) findViewById(R.id.Save);
-        final EditText fronttext = (EditText) findViewById(R.id.FrontCardText);
         fronttext.setVisibility(View.GONE);
-        final EditText backtext = (EditText) findViewById(R.id.BackCardText);
         backtext.setVisibility(View.GONE);
         database = new FlashDatabase(this);
         deckid = getIntent().getLongExtra("D",0);
         database.open();
 
+        fronttext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (fronttext.getLayout().getLineCount()>12)
+                {
+                    InputFilter[] fArray = new InputFilter[1];
+                    fArray[0] = new InputFilter.LengthFilter(fronttext.getText().length());
+                    fronttext.setFilters(fArray);
+                }
+            }
+        });
 
         B1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                fronttext.setMovementMethod(null);
+                fronttext.setMaxLines(12);
                 FragmentManager FM = getFragmentManager();
                 FragmentTransaction FT = FM.beginTransaction();
                 FragmentOne F1 = new FragmentOne();
