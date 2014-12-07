@@ -24,7 +24,7 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
     List<Card> cards;
     Button CreateNewCardButton;
     Deck curdeck;
-
+//change
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
