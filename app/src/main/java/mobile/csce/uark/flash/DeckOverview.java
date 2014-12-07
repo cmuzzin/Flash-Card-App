@@ -6,15 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class DeckOverview extends Activity {
+public class DeckOverview extends Activity  implements AdapterView.OnItemClickListener {
 
     CardArrayAdapter adapter;
     FlashDatabase database;
@@ -40,6 +42,7 @@ public class DeckOverview extends Activity {
        // cards = new ArrayList<Card>();
         //cards.add(new Card(2,"TEST","TEST",1,2));
         gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setOnItemClickListener(this);
         adapter = new CardArrayAdapter(this,cards);
         gridView.setAdapter(adapter);
 
@@ -98,5 +101,30 @@ public class DeckOverview extends Activity {
             }
 
         }
+    }
+
+    public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+        // Then you start a new Activity via Intent
+        Card packed = (Card) adapter.getItem(position);
+        Intent i = packitup(packed);
+        i.putExtra("Card2", (Serializable)packed);
+        //System.out.println("\n");
+        //System.out.print(position);
+        //System.out.println("\n");
+        i.putExtra("position", position);
+        //position = (int) getIntent().getIntExtra("position", 0);
+        //System.out.println("\n");
+        //System.out.print(position);
+        //System.out.println("\n");
+
+        startActivityForResult(i, 9);
+    }
+
+    public Intent packitup(Card c){
+
+        Intent i = new Intent(this, ViewCard.class);
+        i.putExtra("card",(Serializable)c);
+        return i;
+
     }
 }
