@@ -48,7 +48,7 @@ public class FlashDatabase{
     public void InsertCard(Card c)
     {
         ContentValues values = new ContentValues();
-        values.put(myOpenHelper.CARD_COLUMN_NUMBER,GetNumOfCardsInDeck(c.getDeckID()));
+        values.put(myOpenHelper.CARD_COLUMN_NUMBER,GetNumOfCardsInDeck(c.getDeckID())+1);
         values.put(myOpenHelper.CARD_COLUMN_DECK_ID,c.getDeckID());
         values.put(myOpenHelper.CARD_COLUMN_BACK,c.getBackSide());
         values.put(myOpenHelper.CARD_COLUMN_FRONT, c.getFrontSide());

@@ -1,5 +1,6 @@
 package mobile.csce.uark.flash;
 
+    import android.app.ActionBar;
     import android.app.Activity;
     import android.app.FragmentManager;
     import android.app.FragmentTransaction;
@@ -17,6 +18,7 @@ package mobile.csce.uark.flash;
     import android.widget.Button;
     import android.widget.EditText;
     import android.widget.ImageView;
+    import android.widget.TextView;
 
 
 public class CardCreation extends Activity implements FragmentManager.OnBackStackChangedListener,View.OnClickListener {
@@ -34,8 +36,15 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         FragmentOne F1;
         private GestureDetector gestureDetector;
         View.OnTouchListener gestureListener;
+
+    ActionBar actionBar;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        actionBar= getActionBar();
+        actionBar.hide();
         FM = getFragmentManager();
         FT = FM.beginTransaction();
         super.onCreate(savedInstanceState);
@@ -44,8 +53,8 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         backtext = (EditText) findViewById(R.id.BackCardText);
 
         F2 = new Fragmenttwo();
-        fronttext.setMovementMethod(null);
-        fronttext.setMaxLines(12);
+        backtext.setMovementMethod(null);
+        backtext.setMaxLines(12);
 
         imageView = findViewById(R.id.TouchView);
 
@@ -61,7 +70,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         deckid = getIntent().getLongExtra("D",0);
         database.open();
 
-        fronttext.addTextChangedListener(new TextWatcher() {
+        backtext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -74,11 +83,11 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (fronttext.getLayout().getLineCount()>12)
+                if (backtext.getLayout().getLineCount()>12)
                 {
                     InputFilter[] fArray = new InputFilter[1];
-                    fArray[0] = new InputFilter.LengthFilter(fronttext.getText().length());
-                    fronttext.setFilters(fArray);
+                    fArray[0] = new InputFilter.LengthFilter(backtext.getText().length());
+                    backtext.setFilters(fArray);
                 }
             }
         });
@@ -151,6 +160,9 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
        // backtext.setOnClickListener(CardCreation.this);
         //backtext.setOnTouchListener(gestureListener);
+
+        TextView textView = (TextView) findViewById(R.id.navigationbarlabel);
+        textView.setText((database.GetNumOfCardsInDeck(deckid)+1)+"/"+(database.GetNumOfCardsInDeck(deckid)+1));
 
     }
 

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="922dp" android:layout_height="513dp" android:orientation="horizontal" android:background="#00ffffff">
+    android:layout_width="922dp" android:layout_height="513dp" android:orientation="horizontal" android:background="#00000000">
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/notecard_front"/>
+        android:src="@drawable/notecard_front"
+        android:background="#00000000"/>
 
 
 
