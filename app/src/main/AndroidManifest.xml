@@ -40,15 +40,6 @@
             android:label="@string/title_activity_card_flip" >
         </activity>
         <activity
-            android:name=".ScreenSlideActivity"
-            android:label="@string/title_activity_screen_slide" >
-        </activity>
-        <activity
-            android:name=".ScreenSlidePageFragment"
-            android:label="@string/title_activity_screen_slide_page_fragment" >
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
             android:name=".ViewCard"
             android:label="@string/title_activity_view_card" >
         </activity>
