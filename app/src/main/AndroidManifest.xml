@@ -46,6 +46,11 @@
         <activity
             android:name=".ScreenSlidePageFragment"
             android:label="@string/title_activity_screen_slide_page_fragment" >
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".ViewCard"
+            android:label="@string/title_activity_view_card" >
         </activity>
     </application>
 
