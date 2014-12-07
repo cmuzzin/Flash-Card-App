@@ -1,9 +1,11 @@
 package mobile.csce.uark.flash;
 
+import java.io.Serializable;
+
 /**
  * Created by Jonathan on 11/12/14.
  */
-public class Card {
+public class Card implements Serializable {
 
 
     private String FrontSide;
