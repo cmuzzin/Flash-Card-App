@@ -1,20 +1,15 @@
 package mobile.csce.uark.flash;
 
 import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -133,6 +128,14 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         Intent i = new Intent(this, DeckOverview.class);
         i.putExtra("deck",(Serializable)d);
         return i;
+
+    }
+
+    public void GoToAnimation(View view)
+    {
+        Intent intent = new Intent(this, CardFlipActivity.class);
+        startActivity(intent);
+
 
     }
 

@@ -28,12 +28,24 @@
         <activity
             android:name=".DeckOverview"
             android:label="@string/title_activity_deck_overview"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CardCreation"
             android:label="@string/title_activity_card_creation"
-            android:screenOrientation = "landscape">
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".CardFlipActivity"
+            android:label="@string/title_activity_card_flip" >
+        </activity>
+        <activity
+            android:name=".ScreenSlideActivity"
+            android:label="@string/title_activity_screen_slide" >
+        </activity>
+        <activity
+            android:name=".ScreenSlidePageFragment"
+            android:label="@string/title_activity_screen_slide_page_fragment" >
         </activity>
     </application>
 

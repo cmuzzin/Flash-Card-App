@@ -19,6 +19,19 @@
     <string name="deck_name" />
     <string name="back">Back</string>
     <string name="delete">Delete</string>
+    <string name="go_back_to_decks">Go Back To Decks</string>
+    <string name="go_back_to_card">Go Back To Cards</string>
+    <string name="title_activity_card_flip">CardFlipActivity</string>
+
+    <string name="action_photo">action photo</string>
+    <string name="action_info">action info</string>
+    <string name="go_to_anim">Animation</string>
+
+    <string name="title_activity_screen_slide">ScreenSlideActivity</string>
+
+    <string name="title_activity_screen_slide_page_fragment">ScreenSlidePageFragment</string>
+    <string name="lorem_ipsum">lorem</string>
+    <string name="title_template_step">title template</string>
 
 
 </resources>
