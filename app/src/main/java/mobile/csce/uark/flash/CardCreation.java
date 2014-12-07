@@ -3,6 +3,7 @@ package mobile.csce.uark.flash;
     import android.app.Activity;
     import android.app.FragmentManager;
     import android.app.FragmentTransaction;
+    import android.content.Intent;
     import android.os.Bundle;
     import android.view.Menu;
     import android.view.MenuItem;
@@ -13,6 +14,8 @@ package mobile.csce.uark.flash;
 
     public class CardCreation extends Activity {
         Button B1,B2,save;
+        FlashDatabase database;
+        long deckid;
 
 
     @Override
@@ -26,6 +29,10 @@ package mobile.csce.uark.flash;
         fronttext.setVisibility(View.GONE);
         final EditText backtext = (EditText) findViewById(R.id.BackCardText);
         backtext.setVisibility(View.GONE);
+        database = new FlashDatabase(this);
+        deckid = getIntent().getLongExtra("D",0);
+        database.open();
+
 
         B1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +69,10 @@ package mobile.csce.uark.flash;
                 Card newCard;
                  String front = fronttext.getText().toString();
                 String back = backtext.getText().toString();
-                 newCard = new Card(0,front,back,0,0);
-
+                 newCard = new Card(0,front,back,0,deckid);
+                 database.InsertCard(newCard);
+                Intent i = new Intent();
+                setResult(RESULT_OK,i);
                  finish();
 
             }

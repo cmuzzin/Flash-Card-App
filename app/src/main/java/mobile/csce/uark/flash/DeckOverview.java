@@ -1,9 +1,12 @@
 package mobile.csce.uark.flash;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -17,13 +20,15 @@ public class DeckOverview extends Activity {
     FlashDatabase database;
     GridView gridView;
     List<Card> cards;
+    Button CreateNewCardButton;
+    Deck curdeck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_overview);
 
-        Deck curdeck = (Deck) getIntent().getSerializableExtra("deck");
+        curdeck = (Deck) getIntent().getSerializableExtra("deck");
 
         String name = curdeck.GetDeckname();
         System.out.println("THE DECK NAME IS: " + name);
@@ -38,11 +43,26 @@ public class DeckOverview extends Activity {
         adapter = new CardArrayAdapter(this,cards);
         gridView.setAdapter(adapter);
 
+         CreateNewCardButton = (Button) findViewById(R.id.addcardbutton);
 
+        //CreateNewCardButton.setOnClickListener(new View.OnClickListener(){
+
+            //@Override
+
+        //});
 
     }
 
 
+
+
+
+    public void StartCreateCardActivity(View view) {
+        Intent intent = new Intent(this,CardCreation.class);
+        intent.putExtra("D",curdeck.getID());
+        startActivityForResult(intent, 1);
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -63,5 +83,20 @@ public class DeckOverview extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    protected void onActivityResult(int request, int result, Intent data) {
+        super.onActivityResult(request, result, data);
+        if (result == RESULT_OK)
+
+        {
+            if (request == 1) {
+                cards = database.GetAllCardsInADeck(curdeck);
+                adapter = new CardArrayAdapter(this, cards);
+                adapter.notifyDataSetChanged();
+                gridView.setAdapter(adapter);
+
+            }
+
+        }
     }
 }

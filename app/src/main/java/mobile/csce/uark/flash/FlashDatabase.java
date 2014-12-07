@@ -48,12 +48,23 @@ public class FlashDatabase{
     public void InsertCard(Card c)
     {
         ContentValues values = new ContentValues();
-        values.put(myOpenHelper.CARD_COLUMN_NUMBER,c.getNumber());
+        values.put(myOpenHelper.CARD_COLUMN_NUMBER,GetNumOfCardsInDeck(c.getDeckID()));
         values.put(myOpenHelper.CARD_COLUMN_DECK_ID,c.getDeckID());
         values.put(myOpenHelper.CARD_COLUMN_BACK,c.getBackSide());
         values.put(myOpenHelper.CARD_COLUMN_FRONT, c.getFrontSide());
         long insertID = database.insert(myOpenHelper.DATABASE_CARD_TABLE, null, values);
+        System.out.println("test"+c.getID()+" "+c.getDeckID());
+
         c.setID(insertID);
+    }
+
+    public int GetNumOfCardsInDeck(long DeckId)
+    {
+        Cursor mCount= database.rawQuery("select count(*) from "+myOpenHelper.DATABASE_CARD_TABLE+" where "+myOpenHelper.CARD_COLUMN_DECK_ID+"=" + DeckId +" ;", null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        mCount.close();
+        return count;
     }
 
     public void DeleteCard(Card c)
@@ -66,7 +77,7 @@ public class FlashDatabase{
     public List<Card> GetAllCardsInADeck(Deck d)
     {
         List<Card> cards = new ArrayList<Card>();
-        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+d.getID()+ " order by "+SQLHelper.CARD_COLUMN_NUMBER+ " desc;",null);
+        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+d.getID()+ " order by "+SQLHelper.CARD_COLUMN_NUMBER+ " ASC;",null);
         cursor.moveToFirst();
         Card c;
         while(!cursor.isAfterLast())

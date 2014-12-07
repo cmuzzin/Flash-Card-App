@@ -30,6 +30,11 @@
             android:label="@string/title_activity_deck_overview"
             android:screenOrientation = "portrait">
         </activity>
+        <activity
+            android:name=".CardCreation"
+            android:label="@string/title_activity_card_creation"
+            android:screenOrientation = "landscape">
+        </activity>
     </application>
 
 </manifest>
