@@ -9,7 +9,7 @@ public class Deck implements Serializable{
 
     Deck(long id, String deckname)
     {
-        ID = id;
+        ID = id; //here is our id
         DeckName = deckname;
     }
 
