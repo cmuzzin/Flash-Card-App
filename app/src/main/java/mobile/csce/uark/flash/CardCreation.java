@@ -102,4 +102,9 @@ package mobile.csce.uark.flash;
 
         return super.onOptionsItemSelected(item);
     }
+
+        public void GoBackToCardsView(View view)
+        {
+            this.finish();
+        }
 }

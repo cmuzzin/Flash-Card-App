@@ -49,6 +49,7 @@ public class CreateDeck extends Activity {
         }
 
         else
+        
         {
             Deck createdeckitem = new Deck(0,((TextView) findViewById(R.id.editText)).getText().toString());
             FlashDatabase db = new FlashDatabase(this);

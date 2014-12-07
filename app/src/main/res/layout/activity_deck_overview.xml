@@ -52,7 +52,7 @@
         <GridView
             android:id="@+id/gridView"
             android:layout_width="wrap_content"
-            android:layout_height="461dp"
+            android:layout_height="406dp"
             android:columnWidth="150dp"
             android:numColumns="auto_fit"
             android:verticalSpacing="10dp"
@@ -65,6 +65,13 @@
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/go_back_to_decks"
+        android:id="@+id/button4"
+        android:onClick="GoBackToDeckList"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>

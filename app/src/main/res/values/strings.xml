@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="go_back_to_decks">Go Back To Decks</string>
+    <string name="go_back_to_card">Go Back To Cards</string>
+</resources>

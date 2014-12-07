@@ -99,4 +99,11 @@ public class DeckOverview extends Activity {
 
         }
     }
+
+    public void GoBackToDeckList (View view)
+
+    {
+         this.finish();
+    }
+
 }
