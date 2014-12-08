@@ -64,7 +64,7 @@
         <GridView
             android:id="@+id/gridView"
             android:layout_width="wrap_content"
-            android:layout_height="406dp"
+            android:layout_height="401dp"
             android:columnWidth="150dp"
             android:numColumns="auto_fit"
             android:verticalSpacing="10dp"
@@ -75,6 +75,7 @@
             android:clipToPadding="false"
             android:paddingBottom="10dp"/>
 
+
     </LinearLayout>
 
     <Button
@@ -82,7 +83,7 @@
         android:layout_height="wrap_content"
         android:text="@string/go_back_to_decks"
         android:id="@+id/button4"
-        android:onClick="GoBackToDeckList"
+        android:onClick="goBacktoDecks"
         android:layout_gravity="center_horizontal" />
 
 
