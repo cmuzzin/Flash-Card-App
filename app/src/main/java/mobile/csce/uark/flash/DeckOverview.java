@@ -107,7 +107,8 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
         // Then you start a new Activity via Intent
         Card packed = (Card) adapter.getItem(position);
         Intent i = packitup(packed);
-        i.putExtra("Card2", (Serializable)packed);
+        i.putExtra("Card2", packed);
+        i.putExtra("isEditing",false);
         //System.out.println("\n");
         //System.out.print(position);
         //System.out.println("\n");
@@ -122,7 +123,7 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
 
     public Intent packitup(Card c){
 
-        Intent i = new Intent(this, ViewCard.class);
+        Intent i = new Intent(this, CardCreation.class);
         i.putExtra("card",(Serializable)c);
         return i;
 

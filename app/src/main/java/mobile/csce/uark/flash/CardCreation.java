@@ -36,6 +36,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         FragmentOne F1;
         private GestureDetector gestureDetector;
         View.OnTouchListener gestureListener;
+         Card cardBeingViewed;
 
     ActionBar actionBar;
 
@@ -44,6 +45,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         actionBar= getActionBar();
+
         actionBar.hide();
         FM = getFragmentManager();
         FT = FM.beginTransaction();
@@ -68,6 +70,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         backtext.setVisibility(View.GONE);
         database = new FlashDatabase(this);
         deckid = getIntent().getLongExtra("D",0);
+        cardBeingViewed = getIntent().getSerializableExtra("Card2");
         database.open();
 
         backtext.addTextChangedListener(new TextWatcher() {
