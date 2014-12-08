@@ -35,6 +35,11 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
         String name = curdeck.GetDeckname();
         System.out.println("THE DECK NAME IS: " + name);
         TextView Dname = (TextView) findViewById(R.id.textView);
+        if (name.length()>18)
+        {
+            name = name.substring(0,15);
+            name = name + "...";
+        }
         Dname.setText(name);
         database = new FlashDatabase(this);
         database.open();

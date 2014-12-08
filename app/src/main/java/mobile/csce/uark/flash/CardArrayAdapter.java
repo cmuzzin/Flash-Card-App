@@ -54,7 +54,7 @@ public class CardArrayAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        convertView = myInflater.inflate(R.layout.deck_item_view,parent,false);
+        convertView = myInflater.inflate(R.layout.card_item_view,parent,false);
 
         TextView title = (TextView)convertView.findViewById(R.id.textview);
         title.setText(cards.get(position).getFrontSide());

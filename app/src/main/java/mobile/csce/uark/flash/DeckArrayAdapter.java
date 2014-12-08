@@ -58,8 +58,17 @@ public class DeckArrayAdapter extends BaseAdapter {
             convertView = myInflater.inflate(R.layout.deck_item_view,parent,false);
 
         TextView title = (TextView)convertView.findViewById(R.id.textview);
-        title.setText(decks.get(position).DeckName);
-        title.setTextColor(Color.BLACK);
+        if(decks.get(position).DeckName.length()>25)
+        {
+            String temp = decks.get(position).DeckName.substring(0,23);
+            temp = temp + "...";
+            title.setText(temp);
+            title.setTextColor(Color.BLACK);
+        }
+        else {
+            title.setText(decks.get(position).DeckName);
+            title.setTextColor(Color.BLACK);
+        }
 
         return convertView;
     }
