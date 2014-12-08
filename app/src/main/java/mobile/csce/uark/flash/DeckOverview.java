@@ -12,7 +12,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -126,5 +125,10 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
         i.putExtra("card",(Serializable)c);
         return i;
 
+    }
+
+    public void goBacktoDecks(View view )
+    {
+        this.finish();
     }
 }
