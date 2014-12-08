@@ -33,7 +33,7 @@
         <activity
             android:name=".CardCreation"
             android:label="@string/title_activity_card_creation"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="sensorLandscape" >
         </activity>
         <activity
             android:name=".CardFlipActivity"
