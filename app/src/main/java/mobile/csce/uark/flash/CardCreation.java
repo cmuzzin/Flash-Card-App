@@ -37,6 +37,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         private GestureDetector gestureDetector;
         View.OnTouchListener gestureListener;
          Card cardBeingViewed;
+    boolean isCreating;
 
     ActionBar actionBar;
 
@@ -70,43 +71,37 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         backtext.setVisibility(View.GONE);
         database = new FlashDatabase(this);
         deckid = getIntent().getLongExtra("D",0);
-        cardBeingViewed = getIntent().getSerializableExtra("Card2");
+        cardBeingViewed = (Card)getIntent().getSerializableExtra("Card2");
+        isCreating = getIntent().getBooleanExtra("Creating",false);
+
         database.open();
 
-        backtext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (backtext.getLayout().getLineCount()>12)
-                {
-                    InputFilter[] fArray = new InputFilter[1];
-                    fArray[0] = new InputFilter.LengthFilter(backtext.getText().length());
-                    backtext.setFilters(fArray);
-                }
-            }
-        });
 
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Card newCard;
-                 String front = fronttext.getText().toString();
-                String back = backtext.getText().toString();
-                 newCard = new Card(0,front,back,0,deckid);
-                 database.InsertCard(newCard);
-                Intent i = new Intent();
-                setResult(RESULT_OK,i);
-                 finish();
+                if(cardBeingViewed == null) {
+                    Card newCard;
+                    String front = fronttext.getText().toString();
+                    String back = backtext.getText().toString();
+                    newCard = new Card(0, front, back, 0, deckid);
+                    database.InsertCard(newCard);
+                    Intent i = new Intent();
+                    setResult(RESULT_OK, i);
+                    finish();
+                }
+
+                else
+                {
+                    cardBeingViewed.setFrontSide(fronttext.getText().toString());
+                    cardBeingViewed.setBackSide(backtext.getText().toString());
+                    database.UpdateCardText(cardBeingViewed);
+                    //Intent i = new Intent();
+                    //setResult(RESULT_OK, i);
+                   // finish();
+                }
 
             }
         });
@@ -167,6 +162,35 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         TextView textView = (TextView) findViewById(R.id.navigationbarlabel);
         textView.setText((database.GetNumOfCardsInDeck(deckid)+1)+"/"+(database.GetNumOfCardsInDeck(deckid)+1));
 
+        if (cardBeingViewed != null)
+        {
+            fronttext.setText(cardBeingViewed.getFrontSide());
+            backtext.setText(cardBeingViewed.getBackSide());
+            textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+        }
+
+        backtext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (backtext.getLayout().getLineCount()>12)
+                {
+                    InputFilter[] fArray = new InputFilter[1];
+                    fArray[0] = new InputFilter.LengthFilter(backtext.getText().length());
+                    backtext.setFilters(fArray);
+                }
+            }
+        });
+
     }
 
 
@@ -194,7 +218,9 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
         public void GoBackToCardsView(View view)
         {
-            this.finish();
+            Intent i = new Intent();
+            setResult(RESULT_OK, i);
+             finish();
         }
 
         @Override

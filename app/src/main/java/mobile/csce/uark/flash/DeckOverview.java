@@ -63,6 +63,7 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
     public void StartCreateCardActivity(View view) {
         Intent intent = new Intent(this,CardCreation.class);
         intent.putExtra("D",curdeck.getID());
+        intent.putExtra("Creating",true);
         startActivityForResult(intent, 1);
 
     }
@@ -92,13 +93,13 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
         if (result == RESULT_OK)
 
         {
-            if (request == 1) {
+
                 cards = database.GetAllCardsInADeck(curdeck);
                 adapter = new CardArrayAdapter(this, cards);
                 adapter.notifyDataSetChanged();
                 gridView.setAdapter(adapter);
 
-            }
+
 
         }
     }
@@ -108,7 +109,7 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
         Card packed = (Card) adapter.getItem(position);
         Intent i = packitup(packed);
         i.putExtra("Card2", packed);
-        i.putExtra("isEditing",false);
+        i.putExtra("Creating",false);
         //System.out.println("\n");
         //System.out.print(position);
         //System.out.println("\n");

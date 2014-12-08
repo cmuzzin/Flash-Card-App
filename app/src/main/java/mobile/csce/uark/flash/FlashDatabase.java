@@ -58,6 +58,17 @@ public class FlashDatabase{
         c.setID(insertID);
     }
 
+    public void UpdateCardText(Card c)
+    {
+        ContentValues values = new ContentValues();
+        values.put(myOpenHelper.CARD_COLUMN_NUMBER,c.getNumber());
+        values.put(myOpenHelper.CARD_COLUMN_DECK_ID,c.getDeckID());
+        values.put(myOpenHelper.CARD_COLUMN_BACK,c.getBackSide());
+        values.put(myOpenHelper.CARD_COLUMN_FRONT,c.getFrontSide());
+        //values.put(myOpenHelper.CARD_COLUMN_ID,c.getID());
+        database.update(myOpenHelper.DATABASE_CARD_TABLE,values,myOpenHelper.CARD_COLUMN_ID+" = "+c.getID(),null);
+    }
+
     public int GetNumOfCardsInDeck(long DeckId)
     {
         Cursor mCount= database.rawQuery("select count(*) from "+myOpenHelper.DATABASE_CARD_TABLE+" where "+myOpenHelper.CARD_COLUMN_DECK_ID+"=" + DeckId +" ;", null);
