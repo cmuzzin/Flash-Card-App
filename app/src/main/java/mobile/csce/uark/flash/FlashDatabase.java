@@ -100,6 +100,13 @@ public class FlashDatabase{
         cursor.close();
         return cards;
     }
+
+   // public Card GetNextCard(Card c)
+    //{
+       // Cursor c = database.rawQuery("SELECT * FROM " + SQLHelper)
+       // Card n;
+    //}
+
     private Card cursorToCard(Cursor cursor)
     {
         Card c = new Card(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getLong(3),cursor.getLong(4));

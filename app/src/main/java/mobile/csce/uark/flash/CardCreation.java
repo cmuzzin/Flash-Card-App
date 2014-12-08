@@ -20,6 +20,8 @@ package mobile.csce.uark.flash;
     import android.widget.ImageView;
     import android.widget.TextView;
 
+    import java.util.ArrayList;
+
 
 public class CardCreation extends Activity implements FragmentManager.OnBackStackChangedListener,View.OnClickListener {
         Button save;
@@ -128,22 +130,29 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 if (gestureDetector.onTouchEvent(event) == true)
                 {
                     v.setEnabled(false);
-                    flipCard();
-                    if (fronttext.getVisibility()==View.VISIBLE) {
-                        fronttext.setVisibility(View.GONE);
-                        backtext.setVisibility(View.VISIBLE);
+
+                    if(GestureHelper.Direction == GestureHelper.DIRECTION_RIGHT||GestureHelper.Direction == GestureHelper.DIRECTION_LEFT) {
+
+                        flipCard();
+                        if (fronttext.getVisibility() == View.VISIBLE) {
+                            fronttext.setVisibility(View.GONE);
+                            backtext.setVisibility(View.VISIBLE);
+                        } else if (fronttext.getVisibility() == View.GONE) {
+                            backtext.setVisibility(View.GONE);
+                            fronttext.setVisibility(View.VISIBLE);
+                        }
+
                     }
-                    else if(fronttext.getVisibility()==View.GONE)
+                    else if(GestureHelper.Direction == GestureHelper.DIRECTION_UP)
                     {
-                        backtext.setVisibility(View.GONE);
-                        fronttext.setVisibility(View.VISIBLE);
+                        //ArrayList<Card> temp = database.
                     }
                     v.setEnabled(true);
                     //v.requestFocus();
                 }
                 else
                 {
-                    v.requestFocus();
+                   // v.requestFocus();
                 }
 
                 return gestureDetector.onTouchEvent(event);
