@@ -27,8 +27,8 @@ public class GestureHelper extends GestureDetector.SimpleOnGestureListener{
 
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                    return false;
+                //if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                //    return false;
 
                 // right to left swipe
                 if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
@@ -42,8 +42,20 @@ public class GestureHelper extends GestureDetector.SimpleOnGestureListener{
                     Direction = DIRECTION_RIGHT;
                     return true;
                 }
-                else
-                   Direction="";
+                else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                    System.out.println("TEST DOWN");
+                    Direction = DIRECTION_DOWN;
+                    return true;
+                }
+                else if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                    System.out.println("TEST UP");
+                    Direction = DIRECTION_UP;
+                    return true;
+                }
+                else {
+                    Direction = "";
+                    return false;
+                }
 
             } catch (Exception e) {
                 // nothing

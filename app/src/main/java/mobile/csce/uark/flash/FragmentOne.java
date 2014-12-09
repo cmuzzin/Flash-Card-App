@@ -71,6 +71,7 @@ public class FragmentOne extends Fragment {
         EditText textView = (EditText) getView().findViewById(R.id.FrontCardText);
         textView.setFocusableInTouchMode(true);
         textView.requestFocus();
+        textView.setActivated(true);
 
 
 

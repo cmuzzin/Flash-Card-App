@@ -237,6 +237,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                     flipCard();
                     return true;
                 }
+                else
                 return true;
                 //else return false;
 
