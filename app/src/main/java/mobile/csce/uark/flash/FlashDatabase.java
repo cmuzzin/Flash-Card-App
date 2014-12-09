@@ -45,6 +45,18 @@ public class FlashDatabase{
 
     }
 
+    public Card GetLastCardInDeck(long DeckId)
+    {
+        Cursor c = database.rawQuery("Select * From " + myOpenHelper.DATABASE_CARD_TABLE + " Where " +  myOpenHelper.CARD_COLUMN_DECK_ID + " = " +(int)DeckId + " AND "+ myOpenHelper.CARD_COLUMN_NUMBER + " = " + GetNumOfCardsInDeck(DeckId) + ";",null);
+        if (c.getCount()>=1) {
+            c.moveToNext();
+            Card n = cursorToCard(c);
+            return n;
+        }
+        else
+            return null;
+    }
+
     public void InsertCard(Card c)
     {
         ContentValues values = new ContentValues();
@@ -101,11 +113,35 @@ public class FlashDatabase{
         return cards;
     }
 
-   // public Card GetNextCard(Card c)
-    //{
-       // Cursor c = database.rawQuery("SELECT * FROM " + SQLHelper)
-       // Card n;
-    //}
+    public Card GetNextCard(Card card)
+    {
+        long temp = (card.getNumber()+1);
+
+        Cursor c = database.rawQuery("SELECT * FROM " +SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+card.getDeckID()+ " AND "+SQLHelper.CARD_COLUMN_NUMBER+" = "+temp+";",null);
+       if (c.getCount()>=1) {
+           c.moveToNext();
+           Card n = cursorToCard(c);
+           return n;
+       }
+        else
+           return null;
+
+    }
+
+    public Card GetPreviousCard(Card card)
+    {
+        long temp = (card.getNumber()-1);
+
+        Cursor c = database.rawQuery("SELECT * FROM " + SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+ card.getDeckID() + " AND "+SQLHelper.CARD_COLUMN_NUMBER+" = "+(card.getNumber()-1)+";",null);
+        if (c.getCount()>0) {
+            c.moveToNext();
+            Card n = cursorToCard(c);
+            return n;
+        }
+        else
+            return null;
+
+    }
 
     private Card cursorToCard(Cursor cursor)
     {
