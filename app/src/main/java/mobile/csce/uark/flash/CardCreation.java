@@ -237,7 +237,17 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                     flipCard();
                     return true;
                 }
-                else
+                else if (GestureHelper.Direction == GestureHelper.DIRECTION_UP)
+                {
+                    if (database.GetNextCard(cardBeingViewed)!=null) {
+                        cardBeingViewed = database.GetNextCard(cardBeingViewed);
+                       // F1.setText(cardBeingViewed.getFrontSide());
+                        //F2.setText(cardBeingViewed.getBackSide());
+                        //ChangeCardNext();
+                        textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+                    }
+                }
+
                 return true;
                 //else return false;
 
