@@ -10,7 +10,7 @@ package mobile.csce.uark.flash;
     import android.content.Intent;
     import android.os.Bundle;
     import android.os.Handler;
-    import android.support.v4.app.Fragment;
+
 
 
     import android.support.v4.view.MotionEventCompat;
@@ -336,68 +336,67 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         return super.onOptionsItemSelected(item);
     }
 
-        public void Back(View view)
-public void slidecard(){
+    public void slidecard(){
 
-    //Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.slide_down);
-    //RL.startAnimation(slide);
+        //Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.slide_down);
+        //RL.startAnimation(slide);
 
 
-    // Create and commit a new fragment transaction that adds the fragment for the back of
-    // the card, uses custom animations, and is part of the fragment manager's back stack.
+        // Create and commit a new fragment transaction that adds the fragment for the back of
+        // the card, uses custom animations, and is part of the fragment manager's back stack.
 
-    getFragmentManager()
+        getFragmentManager()
 
-    .
+                .
 
-    beginTransaction()
+                        beginTransaction()
 
-    // Replace the default fragment animations with animator resources representing
-    // rotations when switching to the back of the card, as well as animator
-    // resources representing rotations when flipping back to the front (e.g. when
-    // the system Back button is pressed).
-    .
+                                // Replace the default fragment animations with animator resources representing
+                                // rotations when switching to the back of the card, as well as animator
+                                // resources representing rotations when flipping back to the front (e.g. when
+                                // the system Back button is pressed).
+                .
 
-    setCustomAnimations(
-            R.animator.slide_up, R.animator.slide_up)
+                        setCustomAnimations(
+                                R.animator.slide_up, R.animator.slide_up)
 
-    // Replace any fragments currently in the container view with a fragment
-    // representing the next page (indicated by the just-incremented currentPage
-    // variable).
-    .
+                                // Replace any fragments currently in the container view with a fragment
+                                // representing the next page (indicated by the just-incremented currentPage
+                                // variable).
+                .
 
-    replace(R.id.fr1_id, new FragmentOne()
+                        replace(R.id.fr1_id, new FragmentOne()
 
-    )
+                        )
 
-            // Add this transaction to the back stack, allowing users to press Back
-            // to get to the front of the card.
-            .
+                                // Add this transaction to the back stack, allowing users to press Back
+                                // to get to the front of the card.
+                .
 
-    addToBackStack(null)
+                        addToBackStack(null)
 
-    // Commit the transaction.
-    .
+                                // Commit the transaction.
+                .
 
-    commit();
+                        commit();
 
-    // Defer an invalidation of the options menu (on modern devices, the action bar). This
-    // can't be done immediately because the transaction may not yet be committed. Commits
-    // are asynchronous in that they are posted to the main thread's message loop.
-    mHandler.post(new
+        // Defer an invalidation of the options menu (on modern devices, the action bar). This
+        // can't be done immediately because the transaction may not yet be committed. Commits
+        // are asynchronous in that they are posted to the main thread's message loop.
+        mHandler.post(new
 
-    Runnable() {
-        @Override
-        public void run () {
-            invalidateOptionsMenu();
-        }
+                              Runnable() {
+                                  @Override
+                                  public void run () {
+                                      invalidateOptionsMenu();
+                                  }
+                              }
+
+        );
+
     }
 
-    );
-
-}
-
-        public void GoBackToCardsView(View view)
+    public void GoBackToCardsView(View view)
         {
             if (Editing == true) {
                 frame.bringToFront();
@@ -419,14 +418,14 @@ public void slidecard(){
                 finish();
             }
 
-
+            // slidecard();
+            //fronttext.setVisibility(View.VISIBLE);
+            //fronttext.setText("newcard");
 
 
 
            // RelativeLayout f1 = (RelativeLayout) findViewById(R.id.fr1_id);
-            slidecard();
-            fronttext.setVisibility(View.VISIBLE);
-            fronttext.setText("newcard");
+
 
 /*
             RelativeLayout fl = (RelativeLayout) findViewById(R.id.fr1_id);
@@ -476,7 +475,8 @@ public void slidecard(){
             //{
                // cardBeingViewed.setBackSide(F2.getText());
             //}
-            FM.beginTransaction()//.add(R.id.fr1_id, F2,"Frag2")
+            FM.beginTransaction();
+            //.add(R.id.fr1_id, F2,"Frag2")
 
             getFragmentManager()
                     .beginTransaction()
