@@ -41,7 +41,8 @@
         </activity>
         <activity
             android:name=".ViewCard"
-            android:label="@string/title_activity_view_card" >
+            android:label="@string/title_activity_view_card"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
