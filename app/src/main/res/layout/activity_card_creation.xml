@@ -25,7 +25,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="Edit"
             android:textColor="#ffffff"
             android:id="@+id/Save"
             android:layout_alignParentBottom="true"
@@ -48,9 +48,9 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/go_back_to_card"
+            android:text="Back"
             android:id="@+id/button5"
-            android:onClick="GoBackToCardsView"
+            android:onClick="Back"
             android:layout_alignParentBottom="true"
             android:textColor="#ffffff"
             android:layout_marginEnd="65dp" />
@@ -59,77 +59,37 @@
 
 
 
+
+        <FrameLayout
+            android:id="@+id/fr1_id"
+            android:layout_height="285dp"
+            android:layout_width="500dp"
+            android:layout_marginTop="40dp"
+            android:background="#00000000"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
     <RelativeLayout
         android:id="@+id/fr2_id"
-        android:layout_height="513dp"
-        android:layout_width="550dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@id/navigationbar"
-        android:background="#00000000"/>
-
-
-    <EditText
-        android:layout_width="520dp"
-        android:background="#00000000"
         android:layout_height="fill_parent"
-        android:id="@+id/BackCardText"
-        android:hint="Back Side of the Card"
-        android:layout_alignParentEnd="true"
-        android:gravity="top"
-        android:textSize="16dp"
-        android:paddingTop="7.4dp"
-        android:lineSpacingExtra="4.2dp"
-        android:layout_marginRight="38dp"
+        android:layout_width="fill_parent"
         android:layout_below="@id/navigationbar"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginBottom="0dp"
-        android:cursorVisible="false"
-       />
-
-
-
-
-
-
-
-
-
-
-    <EditText
-        android:layout_width="520dp"
-        android:layout_height="fill_parent"
-        android:id="@+id/FrontCardText"
-        android:textSize="32dp"
-        android:hint="Front Side of the Card"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"
-        android:layout_marginRight="38dp"
-        android:layout_below="@id/navigationbar"
-        android:layout_marginBottom="10dp"
         android:background="#00000000"
-        android:cursorVisible="false"
-
-        />
-    <RelativeLayout
-        android:id="@+id/fr1_id"
-        android:layout_height="285dp"
-        android:layout_width="550dp"
-        android:layout_marginLeft="25dp"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
-        android:layout_below="@id/navigationbar"
-        android:layout_marginBottom="10dp"
-        android:background="#00000000"/>
-
-
-
-
-
-
-
-
-
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+    </RelativeLayout>
+    <!--<EditText
+            android:layout_width="520dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/FrontCardText"
+            android:textSize="32dp"
+            android:hint="Front Side of the Card"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:layout_marginRight="38dp"
+            android:layout_below="@id/navigationbar"
+            android:layout_marginBottom="10dp"
+            android:background="#00000000"
+            android:cursorVisible="false"
+    -->
 
 </RelativeLayout>

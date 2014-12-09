@@ -3,10 +3,20 @@
     android:layout_width="922dp" android:layout_height="fill_parent" android:orientation="horizontal" android:background="#00000000">
 
 
-    <ImageView
+    <EditText
         android:layout_width="fill_parent"
+        android:background="@drawable/notecard"
         android:layout_height="fill_parent"
-        android:src="@drawable/notecard"
-        android:background="#00000000"/>
+        android:id="@+id/BackCardText"
+        android:hint="Back Side of the Card"
+        android:gravity="top"
+        android:textSize="16dp"
+        android:paddingTop="7.4dp"
+        android:lineSpacingExtra="4.2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:cursorVisible="false"
+
+        />
 
 </LinearLayout>
