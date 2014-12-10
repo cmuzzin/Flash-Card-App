@@ -142,4 +142,13 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
         database.DeleteDeck(curdeck);
         goBacktoDecks(view);
     }
+
+    public void Quiz_Mode(View view){
+
+        Intent i = new Intent(this, Quiz.class);
+        i.putExtra("deckid", curdeck.getID());
+        startActivity(i);
+
+
+    }
 }

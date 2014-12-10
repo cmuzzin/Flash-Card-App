@@ -42,7 +42,12 @@
         <activity
             android:name=".ViewCard"
             android:label="@string/title_activity_view_card"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".Quiz"
+            android:label="@string/title_activity_quiz"
+            android:screenOrientation="sensorLandscape">
         </activity>
     </application>
 

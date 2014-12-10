@@ -115,6 +115,24 @@ public class FlashDatabase{
         return cards;
     }
 
+
+    public List<Card> GetAllCardsInDeck(long d)
+    {
+        List<Card> cards = new ArrayList<Card>();
+        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+ d + " order by "+SQLHelper.CARD_COLUMN_NUMBER+ " ASC;",null);
+        cursor.moveToFirst();
+        Card c;
+        while(!cursor.isAfterLast())
+        {
+            c = cursorToCard(cursor);
+            cards.add(c);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return cards;
+    }
+
+
     public Card GetNextCard(Card card)
     {
         long temp = (card.getNumber()+1);

@@ -15,6 +15,7 @@
     <string name="title_activity_view_deck">View Deck</string>
     <string name="title_activity_deck_overview">Deck Overview</string>
     <string name="title_activity_view_card">Card View</string>
+    <string name="title_activity_quiz">Quiz</string>
 
 
     <string name="view_deck">Deck:</string>
