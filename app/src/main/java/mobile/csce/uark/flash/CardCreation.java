@@ -119,80 +119,8 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 //.add(F2,"Frag2")
                 .commit();
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(cardBeingViewed == null) {
-                    Card newCard;
-                    String tf ="";
-                    String tb ="";
-                    if (Editing == false) {
-                        frame.bringToFront();
-                        save.setText("Save");
-                        back.setText("Cancel");
-                        Editing = true;
-                        if (FrontVisible)
-                            F1.Edit();
-                        else
-                            F2.Edit();
-                    }
-                    else if (Editing == true)
-                    {
-                        if (FrontVisible)
-                            tf = (F1.getText());
-                        else
-                            tb = (F2.getText());
-                        Editing = false;
-
-                        database.InsertCard(new Card(0,tf,tb,0,deckid));
-                        cardBeingViewed = database.GetLastCardInDeck(deckid);
-                        TouchLayer = (RelativeLayout)findViewById(R.id.fr2_id);
-                        TouchLayer.bringToFront();
-                        save.setText("Edit");
-                        back.setText("Back");
-                    }
-                }
-
-                else
-                {
-                    if (Editing == false) {
-                        frame.bringToFront();
-                        save.setText("Save");
-                        back.setText("Cancel");
-
-                        Editing = true;
-                        if (FrontVisible)
-                            F1.Edit();
-                        else
-                            F2.Edit();
-                        add.setVisibility(View.VISIBLE);
-                        delete.setVisibility(View.VISIBLE);
-                        delete.setEnabled(true);
-                        delete.bringToFront();
-                    }
-                    else if (Editing == true)
-                    {
-                        if (FrontVisible)
-                        cardBeingViewed.setFrontSide(F1.getText());
-                        else
-                        cardBeingViewed.setBackSide(F2.getText());
-                        Editing = false;
-                        TouchLayer = (RelativeLayout)findViewById(R.id.fr2_id);
-                        TouchLayer.bringToFront();
-                        delete.setVisibility(View.GONE);
-                        add.setVisibility(View.GONE);
-                        delete.setEnabled(false);
-                        database.UpdateCardText(cardBeingViewed);
-
-                        save.setText("Edit");
-                        back.setText("Back");
-                    }
 
 
-                }
-
-            }
-        });
 
         if (savedInstanceState == null) {
             // If there is no saved instance state, add a fragment representing the
@@ -486,15 +414,21 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
             });
         }
 
-    public void slidecardDown(){
+    public void slidecardDown() {
 
         //Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.slide_down);
         //RL.startAnimation(slide);
         FragmentOne temp = new FragmentOne();
 
-        Bundle bundle = new Bundle();
-        bundle.putString("T",cardBeingViewed.getFrontSide());
+            Bundle bundle = new Bundle();
+        if (cardBeingViewed != null)
+        bundle.putString("T", cardBeingViewed.getFrontSide());
+
+        else
+        bundle.putString("T","");
+
         temp.setArguments(bundle);
+
 
         FrontVisible = true;
         // Create and commit a new fragment transaction that adds the fragment for the back of
@@ -555,6 +489,8 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         F1 = temp;
     }
 
+
+
     public void DeleteCard(View view)
     {
         if (database.GetPreviousCard(cardBeingViewed)!=null)
@@ -579,6 +515,110 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
 
     }
+    public void  SaveCard(View view) {
 
+
+        if(cardBeingViewed == null) {
+            Card newCard;
+            String tf ="";
+            String tb ="";
+            if (Editing == false) {
+                frame.bringToFront();
+                save.setText("Save");
+                back.setText("Cancel");
+                Editing = true;
+                if (FrontVisible)
+                    F1.Edit();
+                else
+                    F2.Edit();
+            }
+            else if (Editing == true)
+            {
+                if (FrontVisible)
+                    tf = (F1.getText());
+                else
+                    tb = (F2.getText());
+                Editing = false;
+
+                database.InsertCard(new Card(0,tf,tb,0,deckid));
+                cardBeingViewed = database.GetLastCardInDeck(deckid);
+                TouchLayer = (RelativeLayout)findViewById(R.id.fr2_id);
+                TouchLayer.bringToFront();
+                save.setText("Edit");
+                back.setText("Back");
+            }
+        }
+
+        else
+        {
+            if (Editing == false) {
+                frame.bringToFront();
+                save.setText("Save");
+                back.setText("Cancel");
+
+                Editing = true;
+                if (FrontVisible)
+                    F1.Edit();
+                else
+                    F2.Edit();
+                add.setVisibility(View.VISIBLE);
+                delete.setVisibility(View.VISIBLE);
+                delete.bringToFront();
+                add.bringToFront();
+                add.setEnabled(true);
+                delete.setEnabled(true);
+
+            }
+            else if (Editing == true)
+            {
+                if (FrontVisible)
+                    cardBeingViewed.setFrontSide(F1.getText());
+                else
+                    cardBeingViewed.setBackSide(F2.getText());
+                Editing = false;
+                TouchLayer = (RelativeLayout)findViewById(R.id.fr2_id);
+                TouchLayer.bringToFront();
+                delete.setVisibility(View.GONE);
+                add.setVisibility(View.GONE);
+                add.setEnabled(false);
+                delete.setEnabled(false);
+                if (!isCreating)
+                database.UpdateCardText(cardBeingViewed);
+                else
+                    database.InsertCard(cardBeingViewed);
+
+                save.setText("Edit");
+                back.setText("Back");
+            }
+
+
+        }
+
+    }
+    public void  NewCard(View view)
+    {
+        isCreating = true;
+        SaveCard(view);
+
+        //database.InsertCard(new Card(0,"","",0,deckid));
+        cardBeingViewed = null;
+        isCreating = true;
+        Editing = false;
+       // textView.setText((database.GetNumOfCardsInDeck(deckid)+1)+"/"+(database.GetNumOfCardsInDeck(deckid)+1));
+        //Bundle bundle = new Bundle();
+        //bundle.putString("T", "");
+        //F1.setArguments(bundle);
+
+       // bundle = new Bundle();
+        //bundle.putString("T", "");
+       // F2.setArguments(bundle);
+
+
+        slidecardDown();
+
+
+
+
+    }
 
     }

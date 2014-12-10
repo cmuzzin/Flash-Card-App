@@ -22,6 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:text="@string/create_new_deck"
+            android:textStyle="bold"
             android:id="@+id/addcardbutton"
             android:onClick="StartCreateCardActivity"
             android:background="#8A5C2E00"
@@ -44,12 +45,14 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="40dp"
+
             android:text="Delete"
             android:id="@+id/button2"
             android:layout_gravity="right"
             android:background="#8A5C2E00"
             android:textColor="#ffffff"
-            android:textSize="20dp"
+            android:textSize="7pt"
+            android:textStyle="bold"
             android:onClick="DeleteDeck"
             android:gravity="center"
             />

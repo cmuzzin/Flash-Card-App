@@ -84,7 +84,7 @@ public class FlashDatabase{
 
     public int GetNumOfCardsInDeck(long DeckId)
     {
-        Cursor mCount= database.rawQuery("select count(*) from "+myOpenHelper.DATABASE_CARD_TABLE+" where "+myOpenHelper.CARD_COLUMN_DECK_ID+"=" + DeckId +" ;", null);
+        Cursor mCount= database.rawQuery("select count(*) from "+myOpenHelper.DATABASE_CARD_TABLE+" where "+myOpenHelper.CARD_COLUMN_DECK_ID+"=" + Long.toString(DeckId) +" ;", null);
         mCount.moveToFirst();
         int count= mCount.getInt(0);
         mCount.close();
@@ -95,6 +95,7 @@ public class FlashDatabase{
     {
         long id = c.getID();
         database.delete(myOpenHelper.DATABASE_CARD_TABLE, myOpenHelper.CARD_COLUMN_ID + " = " + id, null);
+        database.
         System.out.println("YOU DELETED CARD: " + myOpenHelper.CARD_COLUMN_ID + " = " + id);
     }
 
