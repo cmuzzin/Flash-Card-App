@@ -40,7 +40,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
 
 
-        Button save,back;
+        Button save,back,delete,add;
 
         FlashDatabase database;
         long deckid;
@@ -76,7 +76,9 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         textView = (TextView) findViewById(R.id.navigationbarlabel);
         save = (Button) findViewById(R.id.Save);
         back = (Button) findViewById(R.id.button5);
+        delete = (Button) findViewById(R.id.Delete);
         frame = (FrameLayout)findViewById(R.id.fr1_id);
+        add = (Button) findViewById(R.id.CreateNew);
 
         database = new FlashDatabase(this);
         deckid = getIntent().getLongExtra("D",0);
@@ -112,34 +114,10 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 F2.setArguments(bundle);
             }
 
-
-
-
-
-
-
-
-
-
         FM.beginTransaction()
                 .add(R.id.fr1_id, F1,"Frag1")
                 //.add(F2,"Frag2")
                 .commit();
-       // getSupportFragmentManager().beginTransaction().add(R.id.fr1_id, F2,"Frag2").commit();
-        //FM.executePendingTransactions();
-
-       // backtext = (EditText) findViewById(R.id.BackCardText);
-
-
-
-
-
-
-
-
-
-
-
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,11 +159,16 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                         frame.bringToFront();
                         save.setText("Save");
                         back.setText("Cancel");
+
                         Editing = true;
                         if (FrontVisible)
                             F1.Edit();
                         else
                             F2.Edit();
+                        add.setVisibility(View.VISIBLE);
+                        delete.setVisibility(View.VISIBLE);
+                        delete.setEnabled(true);
+                        delete.bringToFront();
                     }
                     else if (Editing == true)
                     {
@@ -194,21 +177,18 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                         else
                         cardBeingViewed.setBackSide(F2.getText());
                         Editing = false;
-
-                        database.UpdateCardText(cardBeingViewed);
                         TouchLayer = (RelativeLayout)findViewById(R.id.fr2_id);
                         TouchLayer.bringToFront();
+                        delete.setVisibility(View.GONE);
+                        add.setVisibility(View.GONE);
+                        delete.setEnabled(false);
+                        database.UpdateCardText(cardBeingViewed);
+
                         save.setText("Edit");
                         back.setText("Back");
                     }
 
-                    //flipCard();
-                    //cardBeingViewed.setFrontSide(F1.getText());
-                    //cardBeingViewed.setBackSide(F2.getText());
-                    //database.UpdateCardText(cardBeingViewed);
-                    //Intent i = new Intent();
-                    //setResult(RESULT_OK, i);
-                   // finish();
+
                 }
 
             }
@@ -249,13 +229,24 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 {
                     if (database.GetNextCard(cardBeingViewed)!=null) {
                         cardBeingViewed = database.GetNextCard(cardBeingViewed);
+                        slidecard();
                        // F1.setText(cardBeingViewed.getFrontSide());
                         //F2.setText(cardBeingViewed.getBackSide());
                         //ChangeCardNext();
                         textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
                     }
                 }
-
+                else if (GestureHelper.Direction == GestureHelper.DIRECTION_DOWN)
+                {
+                    if (database.GetPreviousCard(cardBeingViewed)!=null) {
+                        cardBeingViewed = database.GetPreviousCard(cardBeingViewed);
+                        slidecardDown();
+                        // F1.setText(cardBeingViewed.getFrontSide());
+                        //F2.setText(cardBeingViewed.getBackSide());
+                        //ChangeCardNext();
+                        textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+                    }
+                }
                 return true;
                 //else return false;
 
@@ -270,38 +261,6 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
         };
         TouchLayer.setOnTouchListener(gestureListener);
-
-        //findViewById(R.id.TouchLayer).setOnTouchListener(gestureListener);
-
-
-       // textView.setText((database.GetNumOfCardsInDeck(deckid)+1)+"/"+(database.GetNumOfCardsInDeck(deckid)+1));
-
-
-/*
-        backtext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (backtext.getLayout().getLineCount()>12)
-                {
-                    InputFilter[] fArray = new InputFilter[1];
-                    fArray[0] = new InputFilter.LengthFilter(backtext.getText().length());
-                    backtext.setFilters(fArray);
-                }
-            }
-        });
-
-
-*/
 
 
     }
@@ -340,8 +299,13 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
         //Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.slide_down);
         //RL.startAnimation(slide);
+        FragmentOne temp = new FragmentOne();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("T",cardBeingViewed.getFrontSide());
+        temp.setArguments(bundle);
 
+        FrontVisible = true;
         // Create and commit a new fragment transaction that adds the fragment for the back of
         // the card, uses custom animations, and is part of the fragment manager's back stack.
 
@@ -358,14 +322,18 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 .
 
                         setCustomAnimations(
-                                R.animator.slide_up, R.animator.slide_up)
+                                R.animator.slide_up, R.animator.slide_up_off)
 
                                 // Replace any fragments currently in the container view with a fragment
                                 // representing the next page (indicated by the just-incremented currentPage
                                 // variable).
+
+
+
                 .
 
-                        replace(R.id.fr1_id, new FragmentOne()
+                        replace(R.id.fr1_id,temp
+
 
                         )
 
@@ -393,7 +361,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                               }
 
         );
-
+        F1 = temp;
     }
 
     public void GoBackToCardsView(View view)
@@ -407,6 +375,8 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                     F1.setText(cardBeingViewed.getFrontSide());
                 else
                     F2.setText(cardBeingViewed.getBackSide());
+                add.setVisibility(View.GONE);
+                delete.setVisibility(View.GONE);
 
                 TouchLayer = (RelativeLayout)findViewById(R.id.fr2_id);
                 TouchLayer.bringToFront();
@@ -418,36 +388,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 finish();
             }
 
-            // slidecard();
-            //fronttext.setVisibility(View.VISIBLE);
-            //fronttext.setText("newcard");
 
-
-
-           // RelativeLayout f1 = (RelativeLayout) findViewById(R.id.fr1_id);
-
-
-/*
-            RelativeLayout fl = (RelativeLayout) findViewById(R.id.fr1_id);
-            Animation slideUp = AnimationUtils.loadAnimation(CardCreation.this, R.anim.slide_up);
-            slideUp.setAnimationListener(new Animation.AnimationListener() {
-              @Override
-              public void onAnimationEnd(Animation animation) {
-                  RelativeLayout fl = (RelativeLayout) findViewById(R.id.fr1_id);
-                  fl.setVisibility(fl.GONE);
-              }
-              @Override
-                  public void onAnimationRepeat(Animation animation) {}
-              @Override
-                  public void onAnimationStart(Animation animation) {}
-             });
-            fl.startAnimation(slideUp);
-            f1.startAnimation(slideDown);
-
-
-            //Intent i = new Intent();
-            //setResult(RESULT_OK, i);
-            // finish();*/
         }
 
         @Override
@@ -459,49 +400,80 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         }
 
         private void flipCard() {
-            FrontVisible = !FrontVisible;
-            if (mShowingBack) {
-                getFragmentManager().popBackStack();
-                return;
-            }
+
 
             // Flip to the back.
 
-            mShowingBack = true;
 
-            // Create and commit a new fragment transaction that adds the fragment for the back of
-            // the card, uses custom animations, and is part of the fragment manager's back stack.
-           // if (F2.getText() != cardBeingViewed.getBackSide())
-            //{
-               // cardBeingViewed.setBackSide(F2.getText());
-            //}
-            FM.beginTransaction();
-            //.add(R.id.fr1_id, F2,"Frag2")
+          if(FrontVisible) {
+              FM.beginTransaction();
+               Fragmenttwo temp = new Fragmenttwo();
+              Bundle b = new Bundle();
+              b.putString("T",cardBeingViewed.getBackSide());
+              temp.setArguments(b);
+              getFragmentManager()
+                      .beginTransaction()
 
-            getFragmentManager()
-                    .beginTransaction()
+                              // Replace the default fragment animations with animator resources representing
+                              // rotations when switching to the back of the card, as well as animator
+                              // resources representing rotations when flipping back to the front (e.g. when
+                              // the system Back button is pressed).
+                      .setCustomAnimations(
+                              R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                              R.animator.card_flip_left_in, R.animator.card_flip_left_out)
 
-                            // Replace the default fragment animations with animator resources representing
-                            // rotations when switching to the back of the card, as well as animator
-                            // resources representing rotations when flipping back to the front (e.g. when
-                            // the system Back button is pressed).
-                    .setCustomAnimations(
-                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                              // Replace any fragments currently in the container view with a fragment
+                              // representing the next page (indicated by the just-incremented currentPage
+                              // variable).
+                              //.replace(R.id.fr2_id,new Fragmenttwo() )
 
-                            // Replace any fragments currently in the container view with a fragment
-                            // representing the next page (indicated by the just-incremented currentPage
-                            // variable).
-                    .replace(R.id.fr2_id,new Fragmenttwo() )
+                      .replace(R.id.fr1_id, temp)
 
-                    .replace(R.id.fr1_id, F2)
+                              // Add this transaction to the back stack, allowing users to press Back
+                              // to get to the front of the card.
+                      //.addToBackStack(null)
 
-                            // Add this transaction to the back stack, allowing users to press Back
-                            // to get to the front of the card.
-                    .addToBackStack(null)
+                              // Commit the transaction.
+                      .commit();
 
-                            // Commit the transaction.
-                    .commit();
+              F2 = temp;
+          }
+            else
+          {
+              FM.beginTransaction();
+              FM.beginTransaction();
+              FragmentOne temp = new FragmentOne();
+              Bundle b = new Bundle();
+              b.putString("T",cardBeingViewed.getFrontSide());
+              temp.setArguments(b);
+
+              getFragmentManager()
+                      .beginTransaction()
+
+                              // Replace the default fragment animations with animator resources representing
+                              // rotations when switching to the back of the card, as well as animator
+                              // resources representing rotations when flipping back to the front (e.g. when
+                              // the system Back button is pressed).
+                      .setCustomAnimations(
+                              R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                              R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+
+                              // Replace any fragments currently in the container view with a fragment
+                              // representing the next page (indicated by the just-incremented currentPage
+                              // variable).
+                              //.replace(R.id.fr2_id,new Fragmenttwo() )
+
+                      .replace(R.id.fr1_id, temp)
+
+                              // Add this transaction to the back stack, allowing users to press Back
+                              // to get to the front of the card.
+                      //.addToBackStack(null)
+
+                              // Commit the transaction.
+                      .commit();
+              F1 = temp;
+          }
+            FrontVisible = !FrontVisible;
 
             // Defer an invalidation of the options menu (on modern devices, the action bar). This
             // can't be done immediately because the transaction may not yet be committed. Commits
@@ -514,7 +486,99 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
             });
         }
 
+    public void slidecardDown(){
 
+        //Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.slide_down);
+        //RL.startAnimation(slide);
+        FragmentOne temp = new FragmentOne();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("T",cardBeingViewed.getFrontSide());
+        temp.setArguments(bundle);
+
+        FrontVisible = true;
+        // Create and commit a new fragment transaction that adds the fragment for the back of
+        // the card, uses custom animations, and is part of the fragment manager's back stack.
+
+        getFragmentManager()
+
+                .
+
+                        beginTransaction()
+
+                                // Replace the default fragment animations with animator resources representing
+                                // rotations when switching to the back of the card, as well as animator
+                                // resources representing rotations when flipping back to the front (e.g. when
+                                // the system Back button is pressed).
+                .
+
+                        setCustomAnimations(
+                                R.animator.slide_down, R.animator.slide_down_off)
+
+                                // Replace any fragments currently in the container view with a fragment
+                                // representing the next page (indicated by the just-incremented currentPage
+                                // variable).
+
+
+
+                .
+
+                        replace(R.id.fr1_id,temp
+
+
+                        )
+
+                                // Add this transaction to the back stack, allowing users to press Back
+                                // to get to the front of the card.
+                .
+
+                        addToBackStack(null)
+
+                                // Commit the transaction.
+                .
+
+                        commit();
+
+        // Defer an invalidation of the options menu (on modern devices, the action bar). This
+        // can't be done immediately because the transaction may not yet be committed. Commits
+        // are asynchronous in that they are posted to the main thread's message loop.
+        mHandler.post(new
+
+                              Runnable() {
+                                  @Override
+                                  public void run () {
+                                      invalidateOptionsMenu();
+                                  }
+                              }
+
+        );
+        F1 = temp;
+    }
+
+    public void DeleteCard(View view)
+    {
+        if (database.GetPreviousCard(cardBeingViewed)!=null)
+        {
+            database.DeleteCard(cardBeingViewed);
+            cardBeingViewed = database.GetPreviousCard(cardBeingViewed);
+
+            slidecardDown();
+
+            // F1.setText(cardBeingViewed.getFrontSide());
+            //F2.setText(cardBeingViewed.getBackSide());
+            //ChangeCardNext();
+            textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+        }
+        else
+        {
+            database.DeleteCard(cardBeingViewed);
+            Editing = false;
+            GoBackToCardsView(view);
+        }
+
+
+
+    }
 
 
     }

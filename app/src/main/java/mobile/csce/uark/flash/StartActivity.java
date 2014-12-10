@@ -120,7 +120,8 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
         //System.out.print(position);
         //System.out.println("\n");
 
-        startActivityForResult(i, 9);
+        startActivityForResult(i, 1);
+
     }
 
     public Intent packitup(Deck d){
@@ -131,13 +132,6 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
 
     }
 
-    public void GoToAnimation(View view)
-    {
-        Intent intent = new Intent(this, CardFlipActivity.class);
-        startActivity(intent);
-
-
-    }
 
 
 }

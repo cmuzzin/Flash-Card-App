@@ -40,6 +40,7 @@ public class FlashDatabase{
     {
         long id = d.getID();
         database.delete(myOpenHelper.DATABASE_DECK_TABLE, myOpenHelper.DECK_COLUMN_ID + " = " +id, null);
+        database.delete(myOpenHelper.DATABASE_CARD_TABLE,myOpenHelper.CARD_COLUMN_DECK_ID+ " = "+id,null);
         System.out.println("YOU DELETED ITEM: " + myOpenHelper.DECK_COLUMN_ID + " = " +id);
 
 

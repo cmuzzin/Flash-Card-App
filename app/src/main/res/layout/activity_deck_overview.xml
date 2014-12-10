@@ -44,12 +44,13 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:text="@string/edit_deck"
+            android:text="Delete"
             android:id="@+id/button2"
             android:layout_gravity="right"
             android:background="#8A5C2E00"
             android:textColor="#ffffff"
             android:textSize="20dp"
+            android:onClick="DeleteDeck"
             android:gravity="center"
             />
 
