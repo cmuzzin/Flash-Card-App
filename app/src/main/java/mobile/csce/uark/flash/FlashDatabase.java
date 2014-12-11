@@ -90,12 +90,34 @@ public class FlashDatabase{
         mCount.close();
         return count;
     }
+    public List<Card> GetAllCardsInDeck(long d)
+    {
+        List<Card> cards = new ArrayList<Card>();
+        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+ d + " order by "+SQLHelper.CARD_COLUMN_NUMBER+ " ASC;",null);
+        cursor.moveToFirst();
+        Card c;
+        while(!cursor.isAfterLast())
+        {
+            c = cursorToCard(cursor);
+            cards.add(c);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return cards;
+    }
 
     public void DeleteCard(Card c)
     {
         long id = c.getID();
+
         database.delete(myOpenHelper.DATABASE_CARD_TABLE, myOpenHelper.CARD_COLUMN_ID + " = " + id, null);
-        database.
+        List<Card> cards = GetAllCardsInDeck(c.DeckID);
+        for(int i = 0; i < cards.size();i++)
+        {
+            cards.get(i).setNumber(i+1);
+            UpdateCardText(cards.get(i));
+        }
+
         System.out.println("YOU DELETED CARD: " + myOpenHelper.CARD_COLUMN_ID + " = " + id);
     }
 
@@ -116,21 +138,7 @@ public class FlashDatabase{
     }
 
 
-    public List<Card> GetAllCardsInDeck(long d)
-    {
-        List<Card> cards = new ArrayList<Card>();
-        Cursor cursor = database.rawQuery("SELECT * FROM  "+SQLHelper.DATABASE_CARD_TABLE+" WHERE "+SQLHelper.CARD_COLUMN_DECK_ID+" = "+ d + " order by "+SQLHelper.CARD_COLUMN_NUMBER+ " ASC;",null);
-        cursor.moveToFirst();
-        Card c;
-        while(!cursor.isAfterLast())
-        {
-            c = cursorToCard(cursor);
-            cards.add(c);
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return cards;
-    }
+
 
 
     public Card GetNextCard(Card card)

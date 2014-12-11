@@ -89,7 +89,10 @@
     <Button
         android:layout_width="200dp"
         android:layout_height="64dp"
-        android:text="Quiz View"
+        android:text="Quiz"
+        android:textSize="20pt"
+        android:textColor="#bf027310"
+        android:background="#9200ff18"
         android:id="@+id/button5"
         android:onClick="Quiz_Mode"
         android:layout_gravity="left" />
@@ -97,9 +100,12 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="62dp"
-        android:text="@string/go_back_to_decks"
+        android:text="Back"
         android:id="@+id/button4"
         android:onClick="goBacktoDecks"
+        android:textColor="#c46f0300"
+        android:textSize="20pt"
+        android:background="#92ff0003"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/button5" />
