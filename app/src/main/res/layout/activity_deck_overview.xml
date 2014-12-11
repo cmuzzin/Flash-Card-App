@@ -60,15 +60,14 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="450dp"
+        >
 
         <GridView
             android:id="@+id/gridView"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="401dp"
             android:columnWidth="150dp"
             android:numColumns="auto_fit"
@@ -78,38 +77,39 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:clipToPadding="false"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true" />
 
 
-    </LinearLayout>
-    <RelativeLayout        android:layout_width="fill_parent"
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       >
-
+        >
     <Button
         android:layout_width="200dp"
-        android:layout_height="64dp"
+        android:layout_height="fill_parent"
         android:text="Quiz"
         android:textSize="20pt"
         android:textColor="#bf027310"
         android:background="#9200ff18"
         android:id="@+id/button5"
-        android:onClick="Quiz_Mode"
-        android:layout_gravity="left" />
+        android:onClick="Quiz_Mode" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="62dp"
-        android:text="Back"
-        android:id="@+id/button4"
-        android:onClick="goBacktoDecks"
-        android:textColor="#c46f0300"
-        android:textSize="20pt"
-        android:background="#92ff0003"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/button5" />
+    android:layout_width="200dp"
+    android:layout_height="fill_parent"
+    android:text="Back"
+    android:id="@+id/button4"
+    android:onClick="goBacktoDecks"
+    android:textColor="#c46f0300"
+    android:textSize="20pt"
+    android:background="#92ff0003"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
+    android:layout_toEndOf="@+id/button5"
+        android:layout_gravity="center_horizontal" />
     </RelativeLayout>
-
-
 </LinearLayout>

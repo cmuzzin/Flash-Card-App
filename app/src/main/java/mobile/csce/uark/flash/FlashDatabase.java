@@ -66,7 +66,7 @@ public class FlashDatabase{
         values.put(myOpenHelper.CARD_COLUMN_BACK,c.getBackSide());
         values.put(myOpenHelper.CARD_COLUMN_FRONT, c.getFrontSide());
         long insertID = database.insert(myOpenHelper.DATABASE_CARD_TABLE, null, values);
-        System.out.println("test"+c.getID()+" "+c.getDeckID());
+        System.out.println("test"+c.getID()+" "+c.getDeckID() + c.getNumber());
 
         c.setID(insertID);
     }

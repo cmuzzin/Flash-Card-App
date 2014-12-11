@@ -81,7 +81,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         add = (Button) findViewById(R.id.CreateNew);
 
         database = new FlashDatabase(this);
-        deckid = getIntent().getLongExtra("D",0);
+        deckid = getIntent().getLongExtra("D",-1);
         cardBeingViewed = (Card)getIntent().getSerializableExtra("Card2");
         isCreating = getIntent().getBooleanExtra("Creating",true);
 
@@ -552,8 +552,8 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 if (!isCreating)
                 database.UpdateCardText(cardBeingViewed);
                 else
-                    database.InsertCard(cardBeingViewed);
-                SetWatchView();
+                database.InsertCard(cardBeingViewed);
+               SetWatchView();
             }
 
 
@@ -595,53 +595,43 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
     }
     public void  NewCard(View view)
     {
-        Card temp;
-        if(isCreating == false) {
-            if (FrontVisible) {
-                temp = new Card(cardBeingViewed.getID(), F1.getText(), cardBeingViewed.getBackSide(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
-            } else {
-                temp = new Card(cardBeingViewed.getID(), cardBeingViewed.getFrontSide(), F2.getText(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
-            }
-            database.UpdateCardText(temp);
-            isCreating = true;
-        }
-        else
-        {
+//        Card temp;
+//        if(isCreating == false) {
+//            if (FrontVisible) {
+//                temp = new Card(cardBeingViewed.getID(), F1.getText(), cardBeingViewed.getBackSide(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
+//            } else {
+//                temp = new Card(cardBeingViewed.getID(), cardBeingViewed.getFrontSide(), F2.getText(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
+//            }
+//            database.UpdateCardText(temp);
+//            isCreating = true;
+//        }
+//        else
+//        {
+//
+//                if (FrontVisible) {
+//                    temp = new Card(0, F1.getText(), "",0, deckid);
+//                } else {
+//                    temp = new Card(0, "", F2.getText(),0, deckid);
+//                }
+//                database.InsertCard(temp);
+//                isCreating = true;
+//
+//        }
+//        cardBeingViewed = new Card(0,"","",0,deckid);
+//
+//        slidecardDown();
+//
+//        SetEditView();
 
-                if (FrontVisible) {
-                    temp = new Card(cardBeingViewed.getID(), F1.getText(), cardBeingViewed.getBackSide(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
-                } else {
-                    temp = new Card(cardBeingViewed.getID(), cardBeingViewed.getFrontSide(), F2.getText(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
-                }
-                database.InsertCard(temp);
-                isCreating = true;
-
-        }
-        cardBeingViewed = new Card(0,"","",0,cardBeingViewed.getDeckID());
-
+        Card temp = cardBeingViewed;
+        temp.setBackSide("");
+        temp.setFrontSide("");
+        isCreating = true;
+        Editing = true;
+        cardBeingViewed = temp;
         slidecardDown();
-
-        SetEditView();
-
-//THIS IS THE LINE THAT IS HAVING PROBLEMS><>><>><>>><><>><><>><><>><><><>>>><><>>><><><><><><><><><><><><>><<><><><><><><><><><><><<><><><
-        textView.setText((database.GetNumOfCardsInDeck(deckid)+1)+"/"+(database.GetNumOfCardsInDeck(deckid)+1));
-
-
-
-
-
-       // isCreating = true;
         //SaveCard(view);
-
-
-        //cardBeingViewed = null;
-       // isCreating = true;
-        //Editing = false;
-
-
-
-
-
+        SetEditView();
 
 
     }

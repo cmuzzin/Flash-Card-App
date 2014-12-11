@@ -23,7 +23,7 @@ public class StartActivity extends Activity implements AdapterView.OnItemClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getActionBar().hide();
         dataSource = new FlashDatabase(this);
         dataSource.open();
         createdeckItems = dataSource.GetAllDecks();

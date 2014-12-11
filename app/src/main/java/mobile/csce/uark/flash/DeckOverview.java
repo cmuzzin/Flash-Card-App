@@ -24,12 +24,13 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
     Button CreateNewCardButton;
     Deck curdeck;
 
+
     //change
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_overview);
-
+        getActionBar().hide();
         curdeck = (Deck) getIntent().getSerializableExtra("deck");
 
         String name = curdeck.GetDeckname();
