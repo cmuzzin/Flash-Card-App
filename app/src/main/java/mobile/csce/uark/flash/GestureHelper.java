@@ -1,11 +1,7 @@
 package mobile.csce.uark.flash;
 
-import android.support.v4.view.MotionEventCompat;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Toast;
 
 
 /**

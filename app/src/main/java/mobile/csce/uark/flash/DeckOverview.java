@@ -111,6 +111,7 @@ public class DeckOverview extends Activity  implements AdapterView.OnItemClickLi
         // Then you start a new Activity via Intent
         Card packed = (Card) adapter.getItem(position);
         Intent i = packitup(packed);
+        i.putExtra("D",curdeck.getID());
         i.putExtra("Card2", packed);
         i.putExtra("Creating", false);
         //System.out.println("\n");

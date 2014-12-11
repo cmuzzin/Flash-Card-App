@@ -1,40 +1,22 @@
 package mobile.csce.uark.flash;
 
-    import android.app.ActionBar;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-   // import android.app.Fragment;
-    import android.app.Activity;
-    import android.app.Fragment;
-    import android.app.FragmentManager;
-    import android.app.FragmentTransaction;
-    import android.content.Intent;
-    import android.os.Bundle;
-    import android.os.Handler;
-
-
-
-    import android.support.v4.view.MotionEventCompat;
-    import android.view.GestureDetector;
-    import android.view.LayoutInflater;
-    import android.view.Menu;
-    import android.view.MenuItem;
-    import android.view.MotionEvent;
-    import android.view.View;
-    import android.view.animation.Animation;
-    import android.view.animation.AnimationUtils;
-    import android.view.ViewGroup;
-    import android.widget.Button;
-    import android.widget.EditText;
-
-    import android.widget.FrameLayout;
-    import android.widget.RelativeLayout;
-    import android.widget.FrameLayout;
-    import android.widget.ImageView;
-    import android.widget.RelativeLayout;
-    import android.widget.TextView;
-    import android.widget.Toast;
-
-    import java.util.ArrayList;
+// import android.app.Fragment;
 
 public class CardCreation extends Activity implements FragmentManager.OnBackStackChangedListener{
 
@@ -54,7 +36,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
          Card cardBeingViewed;
     boolean isCreating;
-    TextView textView;
+    //TextView textView;
     RelativeLayout TouchLayer;
     FrameLayout frame;
 
@@ -73,7 +55,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         actionBar= getActionBar();
         actionBar.hide();
 
-        textView = (TextView) findViewById(R.id.navigationbarlabel);
+        //textView = (TextView) findViewById(R.id.navigationbarlabel);
         save = (Button) findViewById(R.id.Save);
         back = (Button) findViewById(R.id.button5);
         delete = (Button) findViewById(R.id.Delete);
@@ -94,7 +76,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         if (cardBeingViewed != null) {
             // F1Text.setText(cardBeingViewed.getFrontSide());
             //backtext.setText(cardBeingViewed.getBackSide());
-             textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+             //textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
 
             Bundle bundle = new Bundle();
             bundle.putString("T", cardBeingViewed.getFrontSide());
@@ -105,7 +87,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         }
         else
             {
-                textView.setText((database.GetNumOfCardsInDeck(deckid)+1)+"/"+(database.GetNumOfCardsInDeck(deckid)+1));
+                //textView.setText((database.GetNumOfCardsInDeck(deckid) + 1) + "/" + (database.GetNumOfCardsInDeck(deckid) + 1));
                 Bundle bundle = new Bundle();
                 bundle.putString("T", "");
                 F1.setArguments(bundle);
@@ -161,7 +143,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                        // F1.setText(cardBeingViewed.getFrontSide());
                         //F2.setText(cardBeingViewed.getBackSide());
                         //ChangeCardNext();
-                        textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+                        //textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
                     }
                 }
                 else if (GestureHelper.Direction == GestureHelper.DIRECTION_DOWN)
@@ -172,7 +154,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                         // F1.setText(cardBeingViewed.getFrontSide());
                         //F2.setText(cardBeingViewed.getBackSide());
                         //ChangeCardNext();
-                        textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+                       // textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
                     }
                 }
                 return true;
@@ -283,7 +265,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
                               Runnable() {
                                   @Override
-                                  public void run () {
+                                  public void run() {
                                       invalidateOptionsMenu();
                                   }
                               }
@@ -330,7 +312,10 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
               FM.beginTransaction();
                Fragmenttwo temp = new Fragmenttwo();
               Bundle b = new Bundle();
+              if(cardBeingViewed!=null)
               b.putString("T",cardBeingViewed.getBackSide());
+              else
+              b.putString("T","");
               temp.setArguments(b);
               getFragmentManager()
                       .beginTransaction()
@@ -365,7 +350,10 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
               FM.beginTransaction();
               FragmentOne temp = new FragmentOne();
               Bundle b = new Bundle();
+              if(cardBeingViewed!=null)
               b.putString("T",cardBeingViewed.getFrontSide());
+              else
+              b.putString("T","");
               temp.setArguments(b);
 
               getFragmentManager()
@@ -498,7 +486,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
             // F1.setText(cardBeingViewed.getFrontSide());
             //F2.setText(cardBeingViewed.getBackSide());
             //ChangeCardNext();
-            textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+            //textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
         }
         else
         {
@@ -528,8 +516,9 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                     tb = (F2.getText());
 
 
-                database.InsertCard(new Card(0,tf,tb,0,deckid));
-                cardBeingViewed = database.GetLastCardInDeck(deckid);
+
+               cardBeingViewed =  database.InsertCard(new Card(0,tf,tb,0,deckid));
+                isCreating = false;
                 SetWatchView();
 
             }
@@ -551,8 +540,10 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
                 if (!isCreating)
                 database.UpdateCardText(cardBeingViewed);
-                else
-                database.InsertCard(cardBeingViewed);
+                else {
+                    database.InsertCard(cardBeingViewed);
+                    isCreating = false;
+                }
                SetWatchView();
             }
 
@@ -595,42 +586,32 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
     }
     public void  NewCard(View view)
     {
-//        Card temp;
-//        if(isCreating == false) {
-//            if (FrontVisible) {
-//                temp = new Card(cardBeingViewed.getID(), F1.getText(), cardBeingViewed.getBackSide(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
-//            } else {
-//                temp = new Card(cardBeingViewed.getID(), cardBeingViewed.getFrontSide(), F2.getText(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
-//            }
-//            database.UpdateCardText(temp);
-//            isCreating = true;
-//        }
-//        else
-//        {
-//
-//                if (FrontVisible) {
-//                    temp = new Card(0, F1.getText(), "",0, deckid);
-//                } else {
-//                    temp = new Card(0, "", F2.getText(),0, deckid);
-//                }
-//                database.InsertCard(temp);
-//                isCreating = true;
-//
-//        }
-//        cardBeingViewed = new Card(0,"","",0,deckid);
-//
-//        slidecardDown();
-//
-//        SetEditView();
+        Card temp;
+        if(isCreating == false) {
+            if (FrontVisible) {
+                temp = new Card(cardBeingViewed.getID(), F1.getText(), cardBeingViewed.getBackSide(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
+            } else {
+                temp = new Card(cardBeingViewed.getID(), cardBeingViewed.getFrontSide(), F2.getText(),cardBeingViewed.getNumber(), cardBeingViewed.getDeckID());
+            }
+            database.UpdateCardText(temp);
+            isCreating = true;
+        }
+        else
+        {
 
-        Card temp = cardBeingViewed;
-        temp.setBackSide("");
-        temp.setFrontSide("");
-        isCreating = true;
-        Editing = true;
-        cardBeingViewed = temp;
+                if (FrontVisible) {
+                    temp = new Card(0, F1.getText(), "",0, deckid);
+                } else {
+                    temp = new Card(0, "", F2.getText(),0, deckid);
+                }
+                database.InsertCard(temp);
+                isCreating = true;
+
+        }
+        cardBeingViewed = new Card(0,"","",0,deckid);
+
         slidecardDown();
-        //SaveCard(view);
+
         SetEditView();
 
 

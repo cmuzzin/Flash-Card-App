@@ -1,41 +1,26 @@
 package mobile.csce.uark.flash;
 
 import android.app.ActionBar;
-
-// import android.app.Fragment;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
-
-
-import android.support.v4.view.MotionEventCompat;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
+
+// import android.app.Fragment;
 
 public class Quiz extends Activity implements FragmentManager.OnBackStackChangedListener{
 
@@ -65,6 +50,7 @@ public class Quiz extends Activity implements FragmentManager.OnBackStackChanged
     ActionBar actionBar;
     boolean FrontVisible= true;
     boolean Editing = false;
+    Toast toast = null;
 
 
 
@@ -81,6 +67,7 @@ public class Quiz extends Activity implements FragmentManager.OnBackStackChanged
         frame = (FrameLayout)findViewById(R.id.fr1_id);
         database = new FlashDatabase(this);
         database.open();
+        toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG);
 
 
         deckid = getIntent().getLongExtra("deckid",0);
@@ -157,43 +144,65 @@ public class Quiz extends Activity implements FragmentManager.OnBackStackChanged
                 }
                 else if (GestureHelper.Direction == GestureHelper.DIRECTION_UP)
                 {
-                        if (curcard+1 > 0 && curcard+1 < Cards.size()){
-                            if(Cards.size() < 2){
-                                Cards = database.GetAllCardsInDeck(deckid);
-                                curcard=0;
-                            }
-                            Cards.remove(curcard);
-                            if(Cards.size() < 2){
-                                Cards = database.GetAllCardsInDeck(deckid);
-                                curcard=0;
-                            }
-                            slidecard();
-                            System.out.println("The current card is: " + curcard);
-                            cardBeingViewed = Cards.get(curcard);
+                    if (curcard+1 > 0 && curcard < Cards.size()){
+                        if(Cards.size() < 2){
                             score++;
+                            Intent i = new Intent();
+                            setResult(RESULT_OK, i);
+                            toast.setText("Quiz finished");
+                            toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 500);
+                            toast.show();
+                            finish();
+                        }
+                        else if( curcard==Cards.size()-1){
+                            score++;
+                            Cards.remove(curcard);
+                            System.out.println("Resetting the stack");
+                            //Cards = database.GetAllCardsInDeck(deckid);
+                            curcard = 0;
+                            cardBeingViewed = Cards.get(curcard);
+                            slidecard();
+                            toast.setText("Card Removed");
+                            toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 500);
+                            toast.show();
                             textView.setText("Score: " + Integer.toString(score));
                         }
-                        // F1.setText(cardBeingViewed.getFrontSide());
-                        //F2.setText(cardBeingViewed.getBackSide());
-                        //ChangeCardNext();
+                        else {
+                            score++;
+                            Cards.remove(curcard);
+                            System.out.println("The card you should be viewing has an id of: " + curcard + ", which should display: " + Cards.get(curcard).getFrontSide());
+                            cardBeingViewed = Cards.get(curcard);
+                            slidecard();
+                            toast.setText("Card Removed");
+                            toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 500);
+                            toast.show();
+                            textView.setText("Score: " + Integer.toString(score));
+                        }
+                    }
+                    // F1.setText(cardBeingViewed.getFrontSide());
+                    //F2.setText(cardBeingViewed.getBackSide());
+                    //ChangeCardNext();
                 }
                 else if (GestureHelper.Direction == GestureHelper.DIRECTION_DOWN)
                 {
 
 
-                        if(curcard+1 > 0 && curcard+1 < Cards.size()) {
-                            slidecardDown();
-                            curcard++;
-                            if(Cards.size() < 2){
-                                Cards = database.GetAllCardsInDeck(deckid);
-                                curcard=0;
-                            }
-                            cardBeingViewed = Cards.get(curcard);
-                            textView.setText("Score: " + Integer.toString(score));
+                    if(curcard+1 > 0 && curcard < Cards.size()) {
+                        if(curcard ==Cards.size()-1){
+                            curcard=-1;
                         }
-                        // F1.setText(cardBeingViewed.getFrontSide());
-                        //F2.setText(cardBeingViewed.getBackSide());
-                        //ChangeCardNext();
+                        curcard++;
+                        System.out.println("The card you should be viewing has an id of: " + curcard + ", which should display: " + Cards.get(curcard).getFrontSide());
+                        cardBeingViewed = Cards.get(curcard);
+                        slidecardDown();
+                        toast.setText("Card Kept");
+                        toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 500);
+                        toast.show();
+                        textView.setText("Score: " + Integer.toString(score));
+                    }
+                    // F1.setText(cardBeingViewed.getFrontSide());
+                    //F2.setText(cardBeingViewed.getBackSide());
+                    //ChangeCardNext();
                 }
                 return true;
                 //else return false;
@@ -498,6 +507,8 @@ public class Quiz extends Activity implements FragmentManager.OnBackStackChanged
 
         );
         F1 = temp;
+
+
     }
 
 

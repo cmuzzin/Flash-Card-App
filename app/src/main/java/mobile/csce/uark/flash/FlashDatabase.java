@@ -50,7 +50,7 @@ public class FlashDatabase{
     {
         Cursor c = database.rawQuery("Select * From " + myOpenHelper.DATABASE_CARD_TABLE + " Where " +  myOpenHelper.CARD_COLUMN_DECK_ID + " = " +(int)DeckId + " AND "+ myOpenHelper.CARD_COLUMN_NUMBER + " = " + GetNumOfCardsInDeck(DeckId) + ";",null);
         if (c.getCount()>=1) {
-            c.moveToNext();
+            c.moveToFirst();
             Card n = cursorToCard(c);
             return n;
         }
@@ -58,10 +58,18 @@ public class FlashDatabase{
             return null;
     }
 
-    public void InsertCard(Card c)
+    public Card InsertCard(Card c)
     {
+
+        List<Card> cards = GetAllCardsInDeck(c.DeckID);
+        for(int i = 0; i < cards.size();i++)
+        {
+            cards.get(i).setNumber(i+1);
+            UpdateCardText(cards.get(i));
+        }
+        long num = c.getDeckID()+1;
         ContentValues values = new ContentValues();
-        values.put(myOpenHelper.CARD_COLUMN_NUMBER,GetNumOfCardsInDeck(c.getDeckID())+1);
+        values.put(myOpenHelper.CARD_COLUMN_NUMBER,num);
         values.put(myOpenHelper.CARD_COLUMN_DECK_ID,c.getDeckID());
         values.put(myOpenHelper.CARD_COLUMN_BACK,c.getBackSide());
         values.put(myOpenHelper.CARD_COLUMN_FRONT, c.getFrontSide());
@@ -69,6 +77,9 @@ public class FlashDatabase{
         System.out.println("test"+c.getID()+" "+c.getDeckID() + c.getNumber());
 
         c.setID(insertID);
+        return c;
+
+
     }
 
     public void UpdateCardText(Card c)
