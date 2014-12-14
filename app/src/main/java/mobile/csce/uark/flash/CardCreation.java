@@ -36,7 +36,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
          Card cardBeingViewed;
     boolean isCreating;
-    //TextView textView;
+    TextView textView;
     RelativeLayout TouchLayer;
     FrameLayout frame;
 
@@ -55,7 +55,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         actionBar= getActionBar();
         actionBar.hide();
 
-        //textView = (TextView) findViewById(R.id.navigationbarlabel);
+        textView = (TextView) findViewById(R.id.navigationbarlabel);
         save = (Button) findViewById(R.id.Save);
         back = (Button) findViewById(R.id.button5);
         delete = (Button) findViewById(R.id.Delete);
@@ -76,7 +76,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         if (cardBeingViewed != null) {
             // F1Text.setText(cardBeingViewed.getFrontSide());
             //backtext.setText(cardBeingViewed.getBackSide());
-             //textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+             textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
 
             Bundle bundle = new Bundle();
             bundle.putString("T", cardBeingViewed.getFrontSide());
@@ -87,7 +87,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         }
         else
             {
-                //textView.setText((database.GetNumOfCardsInDeck(deckid) + 1) + "/" + (database.GetNumOfCardsInDeck(deckid) + 1));
+                textView.setText((database.GetNumOfCardsInDeck(deckid) + 1) + "/" + (database.GetNumOfCardsInDeck(deckid) + 1));
                 Bundle bundle = new Bundle();
                 bundle.putString("T", "");
                 F1.setArguments(bundle);
@@ -137,24 +137,24 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
                 }
                 else if (GestureHelper.Direction == GestureHelper.DIRECTION_UP)
                 {
-                    if (database.GetNextCard(cardBeingViewed)!=null) {
+                    if (cardBeingViewed != null && database.GetNextCard(cardBeingViewed)!=null) {
                         cardBeingViewed = database.GetNextCard(cardBeingViewed);
                         slidecard();
                        // F1.setText(cardBeingViewed.getFrontSide());
                         //F2.setText(cardBeingViewed.getBackSide());
                         //ChangeCardNext();
-                        //textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+                        textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
                     }
                 }
                 else if (GestureHelper.Direction == GestureHelper.DIRECTION_DOWN)
                 {
-                    if (database.GetPreviousCard(cardBeingViewed)!=null) {
+                    if (cardBeingViewed != null &&database.GetPreviousCard(cardBeingViewed)!=null) {
                         cardBeingViewed = database.GetPreviousCard(cardBeingViewed);
                         slidecardDown();
                         // F1.setText(cardBeingViewed.getFrontSide());
                         //F2.setText(cardBeingViewed.getBackSide());
                         //ChangeCardNext();
-                       // textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+                        textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
                     }
                 }
                 return true;
@@ -278,10 +278,13 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         {
             if (Editing == true) {
 
-                if (FrontVisible)
-                    F1.setText(cardBeingViewed.getFrontSide());
-                else
-                    F2.setText(cardBeingViewed.getBackSide());
+                if(cardBeingViewed!=null) {
+
+                    if (FrontVisible)
+                        F1.setText(cardBeingViewed.getFrontSide());
+                    else
+                        F2.setText(cardBeingViewed.getBackSide());
+                }
                 SetWatchView();
             }
             else if (Editing == false)
@@ -476,25 +479,22 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
 
     public void DeleteCard(View view)
     {
-        if (database.GetPreviousCard(cardBeingViewed)!=null)
-        {
-            database.DeleteCard(cardBeingViewed);
-            cardBeingViewed = database.GetPreviousCard(cardBeingViewed);
-
-            slidecardDown();
-
-            // F1.setText(cardBeingViewed.getFrontSide());
-            //F2.setText(cardBeingViewed.getBackSide());
-            //ChangeCardNext();
-            //textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(cardBeingViewed.getDeckID()));
+        if(cardBeingViewed != null) {
+            if (database.GetPreviousCard(cardBeingViewed) != null) {
+                database.DeleteCard(cardBeingViewed);
+                cardBeingViewed = database.GetPreviousCard(cardBeingViewed);
+                textView.setText(cardBeingViewed.getNumber()+"/"+database.GetNumOfCardsInDeck(deckid));
+                slidecardDown();
+            } else {
+                database.DeleteCard(cardBeingViewed);
+                Editing = false;
+                GoBackToCardsView(view);
+            }
         }
-        else
-        {
-            database.DeleteCard(cardBeingViewed);
-            Editing = false;
+        else {
+            GoBackToCardsView(view);
             GoBackToCardsView(view);
         }
-
 
 
     }
@@ -611,7 +611,7 @@ public class CardCreation extends Activity implements FragmentManager.OnBackStac
         cardBeingViewed = new Card(0,"","",0,deckid);
 
         slidecardDown();
-
+        textView.setText((database.GetNumOfCardsInDeck(deckid)+1)+"/"+(database.GetNumOfCardsInDeck(deckid)+1));
         SetEditView();
 
 

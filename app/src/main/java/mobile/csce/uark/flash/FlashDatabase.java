@@ -61,13 +61,8 @@ public class FlashDatabase{
     public Card InsertCard(Card c)
     {
 
-        List<Card> cards = GetAllCardsInDeck(c.DeckID);
-        for(int i = 0; i < cards.size();i++)
-        {
-            cards.get(i).setNumber(i+1);
-            UpdateCardText(cards.get(i));
-        }
-        long num = c.getDeckID()+1;
+
+        long num = GetNumOfCardsInDeck(c.getDeckID())+1;
         ContentValues values = new ContentValues();
         values.put(myOpenHelper.CARD_COLUMN_NUMBER,num);
         values.put(myOpenHelper.CARD_COLUMN_DECK_ID,c.getDeckID());
